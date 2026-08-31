@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oceans Niagara - While You're Here</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">Oceans Niagara, LLC</a>
+      <ul class="nav-links">
+        <li><a href="/">Main</a></li>
+        <li class="dropdown">
+          <a href="/tools/">Tools ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="/tools/#orchestration">Hands-Off Orchestration</a></li>
+            <li><a href="/tools/#physical-reality">Physical Reality</a></li>
+            <li><a href="/tools/#error-prevention">Error Prevention</a></li>
+            <li><a href="/tools/#compute-efficiency">Compute Efficiency</a></li>
+            <li><a href="/tools/#latency-reduction">Latency Reduction</a></li>
+            <li><a href="/tools/#what-vs-where">What vs. Where</a></li>
+          </ul>
+        </li>
+        <li><a href="/while-youre-here/">While You're Here</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-banner">
+    <h1>Resources & AI Fun</h1>
+  </header>
+
+  <main class="container">
+    <div class="split-layout">
+      
+      <div class="left-half">
+        <h2>About Oceans Niagara</h2>
+        
+<div class="copilot-card">
+  <div class="copilot-chat" id="chat-box">
+    <div class="message assistant">
+      Hello! I am your tailored assistant. Click the "More" button if you want to learn more about Oceans Niagara design principles.
+    </div>
+    
+    <div class="message assistant">
+      Or, send an email to:
+    </div>
+    
+    <div class="message assistant">
+      <a href="mailto:connect@oceansniagara.com" style="color: var(--dark-teal); font-weight: bold; text-decoration: underline;">connect@oceansniagara.com</a>
+    </div>
+  </div>
+  
+<div class="copilot-input-area">
+    <button id="send-btn" style="width: 100%; margin: 0;">More</button>
+  </div>
+</div>
+</div>
+
+<div class="right-half">
+  <h2>Life Without "ON"</h2>
+  <div class="video-wrapper">
+    <iframe 
+      src="https://www.youtube.com/embed/MXEInc6Zy7Q?si=fCK04tgSozcr5ar8"
+      title="Making 3 AI's Count to 100 Together" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+    </div> 
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Oceans Niagara. All rights reserved.</p>
+  </footer>
+
+  <script>
+
+    const facts = [
+      "Did you know Claude Shannon’s theorem defines the maximum rate of error-free data transmission through a communications channel?",
+      
+      "Expressed as C = Blog2(1 + S/N), Shannon's theory proves that channel capacity scales linearly with bandwidth but logarithmically with signal-to-noise ratio, setting a fundamental physical limit on digital communication.",
+      
+      "George Kingsley Zipf's law is also critical to modern communications systems. It states that an item's frequency in a dataset is inversely proportional to its rank.",
+      
+      "In communications, this power-law distribution reveals how languages naturally optimize for efficiency by reusing a small set of common words, heavily influencing modern data compression algorithms and vocabulary design.",
+      
+      "Oceans Niagara also incorporates efficiencies gleaned from molecular biology. Did you know DNA offers unprecedented data storage density?",
+      
+      "That's right! DNA is capable of holding exabytes of digital information in a fraction of a gram. By encoding binary data into synthetic nucleotide sequences it provides a durable medium that lasts for millennia without power, far outliving traditional magnetic and silicon drives.",
+      
+      "Sure, DNA data storage is challenging. But modern communications tools incorporate lesson's learned from nature to give you actual ownership and control of your fleet.",
+      
+      "Contemporary hardware and robotics companies frequently build proprietary software ecosystems that restrict third-party hardware integration. By locking customers into closed operating systems and custom software development kits, manufacturers create high switching costs, capturing recurring revenue while frustrating interoperability and stifling open-source development across the industry.",
+
+      "Want to learn how to gain more control of your data, how to decrease operating costs, and truly connect your fleet? Email us, create an issue, or start a discussion.",
+
+      "Click 'More' to cycle back through the information or scroll back up to the top of the page",
+
+    ];
+
+    let currentIndex = 0;
+    const chatBox = document.getElementById('chat-box');
+    const sendBtn = document.getElementById('send-btn');
+
+    function loadNextFact() {
+          sendBtn.blur();
+      
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = 'More';
+      chatBox.appendChild(userMsg);
+      
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.textContent = facts[currentIndex];
+        chatBox.appendChild(assistantMsg);
+        
+        chatBox.scrollTop = chatBox.scrollHeight;
+        
+        currentIndex = (currentIndex + 1) % facts.length;
+      }, 400);
+    }
+
+    sendBtn.addEventListener('click', loadNextFact);
+  </script>
+
+</body>
+</html>
