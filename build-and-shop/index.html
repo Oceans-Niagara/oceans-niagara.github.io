@@ -23,25 +23,29 @@
 
     <section class="section-card">
       <h2>1. Hardware Overview & Primer</h2>
-      <p>When you automate hardware for digital communication and robotics orchestration, you unite a core set of electronic components to handle logic, power, and actuation:</p>
+      <p>When you automate hardware for digital communication and robotics orchestration, you unite a core set of electronic components to handle logic, sensing, power conditioning, and actuation:</p>
       
       <h3 style="font-size: 1.2rem; color: var(--dark-teal); margin-top: 20px; margin-bottom: 10px; text-transform: uppercase;">Core Baseline Components</h3>
       <div class="component-grid">
         <div class="component-box">
           <h4>🧠 Microcontroller</h4>
-          <p>The programmable computing core that ingests sensor data and outputs real-time control signals to motors, displays, and lights.</p>
+          <p>The programmable computing core that ingests sensor telemetry and outputs real-time control signals to actuators and displays.</p>
+        </div>
+        <div class="component-box">
+          <h4>👁️ Sensors & Transducers</h4>
+          <p>The eyes and ears of the system. They convert physical phenomena (temperature, motion, light, images) into readable electrical signals.</p>
         </div>
         <div class="component-box">
           <h4>🛑 Resistor</h4>
-          <p>The electrical gates. They restrict current flow so sensitive microchips and LEDs don't get fried by surges.</p>
+          <p>Current restrictors and state anchors. Beyond protecting LEDs, they configure pull-up/pull-down states and form voltage dividers for safe logic levels.</p>
         </div>
         <div class="component-box">
           <h4>🪣 Capacitor</h4>
-          <p>Miniature power reservoirs that charge and discharge instantly to smooth out noisy voltage ripples from motors and wireless modules.</p>
+          <p>Voltage stabilizers. Small ceramic decoupling capacitors shunt high-frequency electrical noise to ground, while larger bulk capacitors sustain power surges.</p>
         </div>
         <div class="component-box">
           <h4>⚡ Transistor / MOSFET</h4>
-          <p>The solid-state muscle switch. It allows weak microchip logic signals to safely control high-power kinetic loads like motors and servos.</p>
+          <p>The solid-state muscle switch. It allows weak microchip logic signals to safely control high-power kinetic or thermal loads like motors and heaters.</p>
         </div>
       </div>
 
