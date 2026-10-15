@@ -14,7 +14,7 @@
       <ul class="nav-links">
         <li><a href="/">Main</a></li>
         <li class="dropdown">
-          <a href="/tools/">Concepts ▾</a>
+          <a href="/tools/">Architectural Principles ▾</a>
           <ul class="dropdown-menu">
             <li><a href="/tools/#orchestration">Hands-Off Orchestration</a></li>
             <li><a href="/tools/#physical-reality">Physical Reality</a></li>
@@ -28,7 +28,7 @@
           <a href="/while-youre-here/">While You're Here ▾</a>
           <ul class="dropdown-menu">
             <li><a href="/build-and-shop/">DIY Build & Shop Intro</a></li>
-            <li><a href="javascript:void(0)" onclick="downloadFleetMesh()">Free Fleet Mesh Orchestrator</a></li>
+            <li><a href="https://github.com/oceans-niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download>Free Fleet Mesh Orchestrator</a></li>
           </ul>
         </li>
       </ul>
@@ -59,33 +59,6 @@
   <footer>
     <p>&copy; 2026 Oceans Niagara, LLC. All rights reserved.</p>
   </footer>
-
-    <script>
-    function downloadFleetMesh() {
-      const USER = "oceans-niagara";
-      const REPO = "oceans-niagara.github.io";
-      const TAG = "v1.0.0";
-      const BASE_URL = `https://github.com/${USER}/${REPO}/releases/download/${TAG}`;
-
-      const platform = (navigator.platform || "").toLowerCase();
-      const agent = (navigator.userAgent || "").toLowerCase();
-
-      let binary = "CytoplasmFleetHub-Windows.exe";
-      if (platform.includes("mac") || agent.includes("mac")) {
-        binary = "CytoplasmFleetHub-macOS";
-      } else if (platform.includes("linux") || agent.includes("linux")) {
-        binary = "CytoplasmFleetHub-Linux";
-      }
-
-      const downloadUrl = `${BASE_URL}/${binary}`;
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", binary);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    </script>
   
 </body>
 </html>
