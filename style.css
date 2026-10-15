@@ -72,19 +72,6 @@ nav {
   color: var(--accent-1);
 }
 
-.nav-links a.nav-shop {
-  color: #ffee00 !important;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.9rem;
-}
-
-.nav-links a.nav-shop:hover {
-  color: #ffffff !important;
-  text-shadow: 1px 1px 0px #000;
-}
-
 .dropdown-menu {
   display: none;
   position: absolute;
