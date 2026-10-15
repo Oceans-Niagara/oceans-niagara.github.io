@@ -14,7 +14,7 @@
       <ul class="nav-links">
         <li><a href="/">Main</a></li>
         <li class="dropdown">
-          <a href="/tools/">Tools ▾</a>
+          <a href="/tools/">Concepts ▾</a>
           <ul class="dropdown-menu">
             <li><a href="/tools/#orchestration">Hands-Off Orchestration</a></li>
             <li><a href="/tools/#physical-reality">Physical Reality</a></li>
@@ -27,7 +27,8 @@
         <li class="dropdown">
           <a href="/while-youre-here/">While You're Here ▾</a>
           <ul class="dropdown-menu">
-            <li><a href="/build-and-shop/" class="nav-shop">Build & Shop</a></li>
+            <li><a href="/build-and-shop/">DIY Build & Shop Intro</a></li>
+            <li><a href="javascript:void(0)" onclick="downloadFleetMesh()">Free Fleet Mesh Orchestrator</a></li>
           </ul>
         </li>
       </ul>
@@ -66,7 +67,7 @@
 </div>
 
 <div class="right-half">
-  <h2>Life Without "ON"</h2>
+  <h2>Life Before "ON"</h2>
   <div class="video-wrapper">
     <iframe 
       src="https://www.youtube.com/embed/MXEInc6Zy7Q?si=fCK04tgSozcr5ar8"
@@ -89,7 +90,7 @@
     const facts = [
       "Did you know Claude Shannon’s theorem defines the maximum rate of error-free data transmission through a communications channel?",
       
-      "Expressed as C = Blog2(1 + S/N), Shannon's theory proves that channel capacity scales linearly with bandwidth but logarithmically with signal-to-noise ratio, setting a fundamental physical limit on digital communication.",
+      "Shannon's theory proves that channel capacity scales linearly with bandwidth but logarithmically with signal-to-noise ratio, setting a fundamental physical limit on digital communication.",
       
       "George Kingsley Zipf's law is also critical to modern communications systems. It states that an item's frequency in a dataset is inversely proportional to its rank.",
       
@@ -97,15 +98,17 @@
       
       "Oceans Niagara also incorporates efficiencies gleaned from molecular biology. Did you know DNA offers unprecedented data storage density?",
       
-      "That's right! DNA is capable of holding exabytes of digital information in a fraction of a gram. By encoding binary data into synthetic nucleotide sequences it provides a durable medium that lasts for millennia without power, far outliving traditional magnetic and silicon drives.",
+      "That's right! DNA is capable of holding exabytes of digital information in a fraction of a gram.", 
+      
+      "By encoding binary data into synthetic nucleotide sequences it provides a durable medium that lasts for millennia without power, far outliving traditional magnetic and silicon drives.",
       
       "Sure, DNA data storage is challenging. But modern communications tools incorporate lessons learned from nature to give you actual ownership and control of your fleet.",
       
-      "Contemporary hardware and robotics companies frequently build proprietary software ecosystems that restrict third-party hardware integration. By locking customers into closed operating systems and custom software development kits, manufacturers create high switching costs, capturing recurring revenue while frustrating interoperability and stifling open-source development across the industry.",
+      "Contemporary communication hardware and robotics are frequently built within proprietary software ecosystems that lock customers into closed operating systems and custom software development kits that limit interoperability and stifle open-source development across the industry.",
 
       "Want to learn how to gain more control of your data, how to decrease operating costs, and truly connect your fleet? Email us, create an issue, or start a discussion.",
 
-      "Click 'More' to cycle back through the information or scroll back up to the top of the page",
+      "Click 'More' to cycle back through the information. Or, scroll back up to the top of the page. You can also checkout our free DIY resources or download our Fleet Mesh Orchestrator from the dropdown.",
 
     ];
 
@@ -138,5 +141,32 @@
     sendBtn.addEventListener('click', loadNextFact);
   </script>
 
+  <script>
+function downloadFleetMesh() {
+  const USER = "oceans-niagara";
+  const REPO = "oceans-niagara.github.io";
+  const TAG = "v1.0.0";
+  const BASE_URL = `https://github.com/${USER}/${REPO}/releases/download/${TAG}`;
+
+  const platform = (navigator.platform || "").toLowerCase();
+  const agent = (navigator.userAgent || "").toLowerCase();
+
+  let binary = "CytoplasmFleetHub-Windows.exe";
+  if (platform.includes("mac") || agent.includes("mac")) {
+    binary = "CytoplasmFleetHub-macOS";
+  } else if (platform.includes("linux") || agent.includes("linux")) {
+    binary = "CytoplasmFleetHub-Linux";
+  }
+
+  const downloadUrl = `${BASE_URL}/${binary}`;
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.setAttribute("download", binary);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+    </script>
+  
 </body>
 </html>
