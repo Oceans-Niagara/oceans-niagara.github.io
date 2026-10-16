@@ -19,7 +19,6 @@ def chunk_text(text, chunk_size=800, overlap=100):
 def process_and_upload():
     documents = []
     
-    # 1. Scrape live architecture page directly
     page_url = "https://oceans-niagara.github.io/tools/index.html"
     print(f"Scraping live architecture page: {page_url}")
     try:
@@ -39,7 +38,6 @@ def process_and_upload():
     except Exception as e:
         print(f"Warning: Could not scrape live page: {e}")
 
-    # 2. Ingest scripts from your exact GitHub release zip
     zip_url = "https://github.com/Oceans-Niagara/oceans-niagara.github.io/releases/download/v1.0.0/fleet-mesh.zip"
     print(f"Downloading release zip from {zip_url}...")
     response = requests.get(zip_url)
@@ -65,7 +63,6 @@ def process_and_upload():
 
     print(f"Total chunks across all sources: {len(documents)}. Generating embeddings...")
 
-    # 3. Batch embed and upload to Pinecone
     vectors_to_upsert = []
     for doc in documents:
         response = client.models.embed_content(
