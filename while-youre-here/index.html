@@ -58,7 +58,7 @@
     <p>&copy; 2026 Oceans Niagara. All rights reserved.</p>
   </footer>
 
-    <script>
+   <script>
     const chatBox = document.getElementById('chat-box');
     const sendBtn = document.getElementById('send-btn');
     const inputField = document.getElementById('userInput');
@@ -117,7 +117,7 @@
           loadingElement.textContent = "I couldn't generate an answer right now.";
         }
       } catch (error) {
-        document.getElementById(loadingId).textContent = "Error parsing the decentralized backend server response.";
+        document.getElementById(loadingId).textContent = "Error parsing the response from the edge server.";
       } finally {
         inputField.disabled = false;
         sendBtn.disabled = false;
@@ -130,7 +130,7 @@
     inputField.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') sendRagQuery();
     });
-    </script>
+  </script>
 
 </body>
 </html>
