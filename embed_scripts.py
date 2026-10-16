@@ -1,5 +1,6 @@
 import os
 import io
+import time
 import zipfile
 import requests
 from bs4 import BeautifulSoup
@@ -64,16 +65,22 @@ def process_and_upload():
     else:
         print(f"Failed to download zip. Status code: {response.status_code}")
 
-    print(f"Total chunks across all sources: {len(documents)}. Generating embeddings...")
+    print(f"Total chunks across all sources: {len(documents)}. Generating embeddings with rate limits...")
 
-    # 3. Generate embeddings & format vectors for Pinecone
+    # 3. Generate embeddings with safe rate-limiting pauses
     vectors_to_upsert = []
-    for doc in documents:
+    for idx, doc in enumerate(documents):
+        # Throttle requests to prevent hitting the 100 requests/minute free tier cap
+        if idx > 0 and idx % 15 == 0:
+            time.sleep(10)
+        else:
+            time.sleep(0.5)
+
         response = client.models.embed_content(
             model="gemini-embedding-001",
             contents=doc["text"]
         )
-        # Handle google-genai SDK response object structure safely
+        
         if hasattr(response, 'embeddings') and response.embeddings:
             embedding_values = response.embeddings[0].values
         else:
