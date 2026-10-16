@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,5 +31,4 @@ jobs:
           PINECONE_INDEX_NAME: "orchestrator"
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python embed_scripts.py
           python embed_scripts.py
