@@ -87,12 +87,11 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        const response = await fetch('https://workers.dev', {
+        const response = await fetch('https://weathered-breeze-273c.ph-morton.workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userQuery: query })
         });
-
         const data = await response.json();
         const loadingElement = document.getElementById(loadingId);
         
