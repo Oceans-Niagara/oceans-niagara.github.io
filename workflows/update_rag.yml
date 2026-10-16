@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install google-genai pinecone-client
+          pip install google-genai pinecone-client requests
 
       - name: Run Embedding Script
         env:
