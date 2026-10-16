@@ -1,15 +1,14 @@
 import os
 import io
-import time
 import zipfile
 import requests
 from bs4 import BeautifulSoup
-from google import genai
 from pinecone import Pinecone
+from sentence_transformers import SentenceTransformer
 
 pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
 index = pc.Index(os.environ.get("PINECONE_INDEX_NAME", "orchestrator"))
-client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 def chunk_text(text, chunk_size=800, overlap=100):
     chunks = []
@@ -20,7 +19,7 @@ def chunk_text(text, chunk_size=800, overlap=100):
 def process_and_upload():
     documents = []
     
-    page_url = "https://oceans-niagara.github.io/tools/index.html"
+    page_url = "https://github.io"
     try:
         page_res = requests.get(page_url)
         if page_res.status_code == 200:
@@ -37,44 +36,39 @@ def process_and_upload():
     except Exception as e:
         print(f"Warning: {e}")
 
-    zip_url = "https://github.com/Oceans-Niagara/oceans-niagara.github.io/releases/download/v1.0.0/fleet-mesh.zip"
-    response = requests.get(zip_url)
-    
-    if response.status_code == 200:
-        with zipfile.ZipFile(io.BytesIO(response.content)) as z:
-            for filename in z.namelist():
-                if filename.endswith('/') or filename.startswith('__MACOSX'):
-                    continue 
-                with z.open(filename) as f:
-                    try:
-                        content = f.read().decode('utf-8')
-                    except UnicodeDecodeError:
-                        continue
-                    for idx, chunk in enumerate(chunk_text(content)):
-                        documents.append({
-                            "id": f"{filename}-chunk-{idx}",
-                            "text": chunk,
-                            "source": filename
-                        })
+    zip_url = "https://github.com"
+    try:
+        response = requests.get(zip_url)
+        if response.status_code == 200:
+            with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+                for filename in z.namelist():
+                    if filename.endswith('/') or filename.startswith('__MACOSX'):
+                        continue 
+                    with z.open(filename) as f:
+                        try:
+                            content = f.read().decode('utf-8')
+                        except UnicodeDecodeError:
+                            continue
+                        for idx, chunk in enumerate(chunk_text(content)):
+                            documents.append({
+                                "id": f"{filename}-chunk-{idx}",
+                                "text": chunk,
+                                "source": filename
+                            })
+    except Exception as e:
+        print(f"Warning fetching zip: {e}")
+
+    if not documents:
+        return
+
+    texts_to_embed = [doc["text"] for doc in documents]
+    embeddings = model.encode(texts_to_embed, show_progress_bar=False)
 
     vectors_to_upsert = []
     for idx, doc in enumerate(documents):
-        if idx > 0 and idx % 15 == 0:
-            time.sleep(10)
-        else:
-            time.sleep(0.5)
-
-        response = client.models.embed_content(
-            model="gemini-embedding-001",
-            contents=doc["text"],
-            config={"output_dimensionality": 768},
-        )
-        
-        embedding_values = response.embeddings[0].values if (hasattr(response, 'embeddings') and response.embeddings) else response.embedding.values
-
         vectors_to_upsert.append({
             "id": doc["id"],
-            "values": embedding_values,
+            "values": embeddings[idx].tolist(),
             "metadata": {"text": doc["text"], "source": doc["source"]}
         })
 
@@ -83,3 +77,4 @@ def process_and_upload():
 
 if __name__ == "__main__":
     process_and_upload()
+
