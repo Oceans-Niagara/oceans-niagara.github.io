@@ -19,7 +19,7 @@ def chunk_text(text, chunk_size=800, overlap=100):
 def process_and_upload():
     documents = []
     
-    page_url = "https://github.io"
+    page_url = "https://oceans-niagara.github.io/tools/"
     try:
         page_res = requests.get(page_url)
         if page_res.status_code == 200:
@@ -36,7 +36,7 @@ def process_and_upload():
     except Exception as e:
         print(f"Warning: {e}")
 
-    zip_url = "https://github.com"
+    zip_url = "https://github.com/Oceans-Niagara/oceans-niagara.github.io/releases/download/v1.0.0/fleet-mesh.zip"
     try:
         response = requests.get(zip_url)
         if response.status_code == 200:
@@ -77,4 +77,3 @@ def process_and_upload():
 
 if __name__ == "__main__":
     process_and_upload()
-
