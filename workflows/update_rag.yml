@@ -3,7 +3,7 @@ name: Update RAG Vector Database
 on:
   release:
     types: [published]
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+  workflow_dispatch: 
 
 jobs:
   update-vector-db:
