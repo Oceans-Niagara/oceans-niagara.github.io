@@ -23,12 +23,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-genai pinecone requests beautifulsoup4
+          pip install pinecone requests beautifulsoup4 sentence-transformers --extra-index-url https://pytorch.org
 
       - name: Run embedding script
         env:
           PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
           PINECONE_INDEX_NAME: "orchestrator"
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python embed_scripts.py
+
