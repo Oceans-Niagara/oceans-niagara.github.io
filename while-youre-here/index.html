@@ -87,7 +87,7 @@
       chatBox.scrollTop = chatBox.scrollHeight;
 
       try {
-        const response = await fetch('https://weathered-breeze-273c.ph-morton.workers.dev/', {
+        const response = await fetch('https://workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userQuery: query })
@@ -97,7 +97,21 @@
         const loadingElement = document.getElementById(loadingId);
         
         if (data.answer) {
-          loadingElement.textContent = data.answer;
+          // Splitting the sources metadata so it doesn't break layout strings
+          if (data.answer.includes("\n\nSources: ")) {
+            const parts = data.answer.split("\n\nSources: ");
+            const mainText = parts[0];
+            const sourceFiles = parts[1];
+
+            loadingElement.innerHTML = `
+              <div class="answer-text" style="margin-bottom: 8px;">${mainText}</div>
+              <div class="sources-badge" style="font-size: 0.75rem; color: #94a3b8; border-top: 1px solid #334155; padding-top: 4px; display: inline-block;">
+                📁 Reference: <span style="font-style: italic;">${sourceFiles}</span>
+              </div>
+            `;
+          } else {
+            loadingElement.textContent = data.answer;
+          }
         } else if (data.error) {
           loadingElement.textContent = `Orchestration Error: ${data.error}`;
         } else {
@@ -106,7 +120,6 @@
       } catch (error) {
         document.getElementById(loadingId).textContent = "Error connecting to the decentralized backend proxy service.";
       } finally {
-        // Re-enable input components once the pipeline resolves
         inputField.disabled = false;
         sendBtn.disabled = false;
         inputField.focus();
