@@ -79,7 +79,7 @@
       const assistantMsg = document.createElement('div');
       assistantMsg.className = 'message assistant';
       assistantMsg.id = loadingId;
-      assistantMsg.textContent = 'Searching documentation vectors...';
+      assistantMsg.textContent = 'Thinking...';
       chatBox.appendChild(assistantMsg);
       chatBox.scrollTop = chatBox.scrollHeight;
 
@@ -91,7 +91,9 @@
         });
 
         const data = await response.json();
-        document.getElementById(loadingId).textContent = data.answer || "I couldn't find a matching record in the RAG index.";
+        
+        // FIX: Display data.answer if present, data.error if backend returned an error, or a neutral fallback
+        document.getElementById(loadingId).textContent = data.answer || data.error || "I couldn't generate an answer right now.";
       } catch (error) {
         document.getElementById(loadingId).textContent = "Error connecting to the backend proxy service.";
       }
