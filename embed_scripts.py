@@ -69,9 +69,12 @@ def process_and_upload():
             model="text-embedding-004",
             contents=doc["text"]
         )
+        # Handle the new SDK's embedding response structure safely
+        embedding_values = response.embeddings[0].values if hasattr(response, 'embeddings') else response.embedding.values
+        
         vectors_to_upsert.append({
             "id": doc["id"],
-            "values": response.embedding.values,
+            "values": embedding_values,
             "metadata": {"text": doc["text"], "source": doc["source"]}
         })
 
