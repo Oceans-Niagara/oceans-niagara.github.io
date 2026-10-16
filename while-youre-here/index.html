@@ -67,6 +67,9 @@
       const query = inputField.value.trim();
       if (!query) return;
 
+      inputField.disabled = true;
+      sendBtn.disabled = true;
+
       const userMsg = document.createElement('div');
       userMsg.className = 'message user';
       userMsg.textContent = query;
@@ -91,13 +94,24 @@
         });
 
         const data = await response.json();
+        const loadingElement = document.getElementById(loadingId);
         
-        // FIX: Display data.answer if present, data.error if backend returned an error, or a neutral fallback
-        document.getElementById(loadingId).textContent = data.answer || data.error || "I couldn't generate an answer right now.";
+        if (data.answer) {
+          loadingElement.textContent = data.answer;
+        } else if (data.error) {
+          loadingElement.textContent = `Orchestration Error: ${data.error}`;
+        } else {
+          loadingElement.textContent = "I couldn't generate an answer right now.";
+        }
       } catch (error) {
-        document.getElementById(loadingId).textContent = "Error connecting to the backend proxy service.";
+        document.getElementById(loadingId).textContent = "Error connecting to the decentralized backend proxy service.";
+      } finally {
+        // Re-enable input components once the pipeline resolves
+        inputField.disabled = false;
+        sendBtn.disabled = false;
+        inputField.focus();
+        chatBox.scrollTop = chatBox.scrollHeight;
       }
-      chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     sendBtn.addEventListener('click', sendRagQuery);
