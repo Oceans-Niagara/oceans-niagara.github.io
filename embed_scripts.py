@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from google import genai
 from pinecone import Pinecone
 
-# Initialize clients using environment variables
 pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
 index = pc.Index(os.environ.get("PINECONE_INDEX_NAME", "orchestrator"))
 client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
@@ -21,7 +20,6 @@ def chunk_text(text, chunk_size=800, overlap=100):
 def process_and_upload():
     documents = []
     
-    # 1. Scrape live architecture page
     page_url = "https://oceans-niagara.github.io/tools/index.html"
     print(f"Scraping live architecture page: {page_url}")
     try:
@@ -41,7 +39,6 @@ def process_and_upload():
     except Exception as e:
         print(f"Warning: Could not scrape live page: {e}")
 
-    # 2. Download and parse release ZIP
     zip_url = "https://github.com/Oceans-Niagara/oceans-niagara.github.io/releases/download/v1.0.0/fleet-mesh.zip"
     print(f"Downloading release zip from {zip_url}...")
     response = requests.get(zip_url)
@@ -67,7 +64,6 @@ def process_and_upload():
 
     print(f"Total chunks across all sources: {len(documents)}. Generating embeddings with rate limits...")
 
-    # 3. Generate embeddings with safe rate-limiting pauses
     vectors_to_upsert = []
     for idx, doc in enumerate(documents):
         # Throttle requests to prevent hitting the 100 requests/minute free tier cap
@@ -79,6 +75,7 @@ def process_and_upload():
         response = client.models.embed_content(
             model="gemini-embedding-001",
             contents=doc["text"]
+            config={"output_dimensionality": 768}
         )
         
         if hasattr(response, 'embeddings') and response.embeddings:
@@ -92,7 +89,6 @@ def process_and_upload():
             "metadata": {"text": doc["text"], "source": doc["source"]}
         })
 
-    # 4. Upsert vectors in batches of 50
     for i in range(0, len(vectors_to_upsert), 50):
         batch = vectors_to_upsert[i:i+50]
         index.upsert(vectors=batch)
