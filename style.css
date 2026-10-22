@@ -195,7 +195,8 @@ nav {
   max-width: 280px;
   height: auto;
   border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border: 1px solid #d1d5db; 
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 .edge-builder-grid {
