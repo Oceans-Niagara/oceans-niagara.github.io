@@ -653,13 +653,23 @@ footer {
 
 @media (max-width: 768px) {
   html, body {
-    overflow-x: clip; 
+    overflow-x: hidden; 
+    max-width: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
   }
 
-  .container, 
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 35px auto 0 auto !important;   
+    padding-left: 15px !important;  
+    padding-right: 15px !important; 
+    padding-top: 0 !important;
+    box-sizing: border-box !important;
+  }
+
   .main-layout, 
   .left-content, 
   .right-content {
@@ -678,9 +688,21 @@ footer {
     height: auto;
   }
 
-  .copilot-card {
+  .edge-builder-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
     width: 100% !important;
     max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .copilot-card,
+  .edge-builder-sidebar,
+  .btn-side-diy,
+  .btn-side-download {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
     margin: 0 auto !important;
   }
 
@@ -702,11 +724,6 @@ footer {
     margin-top: 0 !important;    
     margin-bottom: 0 !important;    
     padding-bottom: 15px !important; 
-  }
-
-  .container {
-    margin-top: 35px !important;   
-    padding-top: 0 !important;      
   }
 
   #orchestration.architecture-section {
@@ -761,13 +778,17 @@ footer {
   }
 
   .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     padding: 0;
-    gap: 5px;               
+    gap: 5px;
+    width: 100%;
   }
 
   .nav-links a {
-    padding: 6px 10px;      
-    font-size: 0.9rem;      
+    padding: 6px 8px;      
+    font-size: 0.85rem;      
   }
 
   .dealer-banner h1 {
