@@ -156,7 +156,7 @@ nav {
   border: 1px solid #ccc;
 }
 
-.tool-section {
+.architecture-section {
   display: flex;
   align-items: center;
   gap: 40px;
@@ -164,25 +164,25 @@ nav {
   border-bottom: 1px solid #e2e8f0;
 }
 
-.tool-section:last-child {
+.architecture-section:last-child {
   border-bottom: none;
 }
 
-.tool-section.reverse {
+.architecture-section.reverse {
   flex-direction: row-reverse;
 }
 
-.tool-text {
+.architecture-text {
   flex: 1.2;
 }
 
-.tool-text h3 {
+.architecture-text h3 {
   font-size: 1.3rem;
   color: var(--dark-teal);
   margin-bottom: 10px;
 }
 
-.tool-image-container {
+.architecture-image-container {
   flex: 0.8;
   display: flex;
   justify-content: center;
