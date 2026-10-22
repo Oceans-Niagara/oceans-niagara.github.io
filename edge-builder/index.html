@@ -5,118 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oceans Niagara - Fleet Mesh Assistant</title>
   <link rel="stylesheet" href="../style.css">
-  <style>
-    .edge-builder-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-      align-items: start;
-    }
-
-    .edge-builder-grid .copilot-card {
-      width: 100%;
-      height: 500px;
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    .edge-builder-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .btn-side-download {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: var(--dark-teal);
-      color: #ffffff;
-      border: 2px solid #000000;
-      border-radius: 6px;
-      box-shadow: 2px 2px 0px #000000;
-      padding: 24px 20px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.15rem;
-      box-sizing: border-box;
-      min-height: 120px;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .btn-side-download:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0px #000000;
-      color: #ffffff;
-    }
-
-    .btn-side-download .subtext {
-      font-size: 0.85rem;
-      font-weight: 400;
-      margin-top: 8px;
-      opacity: 0.95;
-    }
-
-    .btn-side-diy {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background: #ffffff;
-      color: var(--dark-teal);
-      border: 2px solid var(--dark-teal);
-      border-radius: 6px;
-      box-shadow: 2px 2px 0px #000000;
-      padding: 24px 20px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.15rem;
-      box-sizing: border-box;
-      min-height: 120px;
-      position: relative;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-
-    .btn-side-diy:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0px #000000;
-      color: var(--dark-teal);
-    }
-
-    .btn-side-diy .badge-pop {
-      margin-bottom: 8px;
-      font-size: 0.75rem;
-    }
-
-    .btn-side-diy .subtext {
-      font-size: 0.85rem;
-      font-weight: 400;
-      margin-top: 6px;
-      color: #333333;
-    }
-
-    @media (max-width: 860px) {
-      .edge-builder-grid {
-        grid-template-columns: 1fr;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-      .edge-builder-grid .copilot-card {
-        margin: 0 auto;
-      }
-      .edge-builder-sidebar {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -139,8 +27,8 @@
         <li class="dropdown">
           <a href="/edge-builder/">Edge Builder ▾</a>
           <ul class="dropdown-menu">
-            <li><a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download="fleet-mesh.zip" title="Click to download zip, extract all files, then double-click the 'Run' file for your operating system (Windows, Mac, or Linux).">Free Fleet Mesh Orchestrator</a></li>
             <li><a href="/intro-diy-guide/">Intro DIY Guide</a></li>
+            <li><a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download="fleet-mesh.zip" title="Click to download zip, then double-click the 'Run' file for your operating system (Windows, Mac, or Linux).">Free Fleet Mesh Orchestrator</a></li>
           </ul>
         </li>
       </ul>
@@ -167,15 +55,25 @@
       </div>
 
       <div class="edge-builder-sidebar">
+        <a href="/intro-diy-guide/" class="btn-side-diy">
+          <span class="badge-pop">No Solder, No Stress</span>
+          Intro DIY Guide
+          <span class="subtext">Hardware Decoded & Starter Kits →</span>
+        </a>
+
         <a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download="fleet-mesh.zip" title="Click to download zip, extract all files, then double-click the 'Run' file for your operating system (Windows, Mac, or Linux)." class="btn-side-download">
           Free Fleet Mesh Orchestrator
           <span class="subtext">Download fleet-mesh.zip ⤓</span>
         </a>
 
-        <a href="/intro-diy-guide/" class="btn-side-diy">
-          <span class="badge-pop">No Solder, No Stress</span>
-          Intro DIY Guide
-          <span class="subtext">Hardware Decoded & Starter Kits →</span>
+        <a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh-ros2.zip" download="fleet-mesh-ros2.zip" title="Download ROS 2 Companion Node package (Python / rclpy / CBOR bridge)." class="btn-side-download" style="background: #ffffff; color: var(--text-dark);">
+          <span class="badge-pop" style="background-color: #0284c7; margin-bottom: 6px; font-size: 0.75rem;">*New Companion</span>
+          ROS 2 Companion Node
+          <span class="subtext" style="color: #555555;">Download fleet-mesh-ros2.zip ⤓</span>
+        </a>
+
+        <a href="https://github.com/Oceans-Niagara/fleet-mesh" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--dark-teal); text-decoration: none; padding: 4px 0;">
+          View Source & Documentation on GitHub ↗
         </a>
       </div>
     </div>
@@ -185,7 +83,7 @@
     <p>&copy; 2026 Oceans Niagara. All rights reserved.</p>
   </footer>
 
-   <script>
+  <script>
     const chatBox = document.getElementById('chat-box');
     const sendBtn = document.getElementById('send-btn');
     const inputField = document.getElementById('userInput');
