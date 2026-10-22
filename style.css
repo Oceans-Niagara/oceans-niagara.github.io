@@ -603,9 +603,45 @@ footer {
     max-width: 800px;
     margin: 0 auto;
   }
+
   .edge-builder-sidebar {
     max-width: 800px;
     margin: 0 auto;
+    gap: 12px;
+  }
+
+  .edge-builder-grid .copilot-card {
+    height: 440px;
+  }
+
+  .btn-side-diy {
+    min-height: auto;
+    padding: 14px 16px;
+  }
+
+  .btn-side-download,
+  .btn-side-ros2 {
+    min-height: auto;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  .btn-side-download .subtext,
+  .btn-side-ros2 .subtext {
+    font-size: 0.75rem;
+    margin-top: 2px;
+  }
+
+  .github-repo-link {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-decoration: none;
   }
 }
 
