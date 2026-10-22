@@ -156,12 +156,21 @@
     });
 
     window.addEventListener('load', () => {
-  const over = [...document.querySelectorAll('*')].filter(el => el.getBoundingClientRect().width > window.innerWidth);
-  if (over.length) {
-    alert('Culprit element: ' + over.map(e => e.tagName + (e.className ? '.' + e.className : '')).join(', '));
-  } else {
-    alert('No element is wider than window.innerWidth (' + window.innerWidth + 'px)');
-  }
+  const winW = window.innerWidth;
+  const scrollW = document.documentElement.scrollWidth;
+  
+  // Find any element whose right edge extends past the screen
+  const offRight = [...document.querySelectorAll('*')].filter(el => {
+    return el.getBoundingClientRect().right > winW + 1;
+  });
+
+  const names = offRight.map(el => el.tagName + (el.className ? '.' + el.className.toString().split(' ')[0] : ''));
+  const uniqueNames = [...new Set(names)].slice(0, 5).join(', ');
+
+  alert(
+    'Screen: ' + winW + 'px | Page Total: ' + scrollW + 'px\n' +
+    'Sticking off right edge: ' + (uniqueNames || 'None')
+  );
 });
     
   </script>
