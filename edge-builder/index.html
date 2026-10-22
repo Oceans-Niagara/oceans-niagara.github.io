@@ -154,6 +154,16 @@
     inputField.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') sendRagQuery();
     });
+
+    window.addEventListener('load', () => {
+  const over = [...document.querySelectorAll('*')].filter(el => el.getBoundingClientRect().width > window.innerWidth);
+  if (over.length) {
+    alert('Culprit element: ' + over.map(e => e.tagName + (e.className ? '.' + e.className : '')).join(', '));
+  } else {
+    alert('No element is wider than window.innerWidth (' + window.innerWidth + 'px)');
+  }
+});
+    
   </script>
 
 </body>
