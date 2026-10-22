@@ -156,20 +156,15 @@
     });
 
     window.addEventListener('load', () => {
-  const winW = window.innerWidth;
-  const scrollW = document.documentElement.scrollWidth;
-  
-  // Find any element whose right edge extends past the screen
-  const offRight = [...document.querySelectorAll('*')].filter(el => {
-    return el.getBoundingClientRect().right > winW + 1;
-  });
-
-  const names = offRight.map(el => el.tagName + (el.className ? '.' + el.className.toString().split(' ')[0] : ''));
-  const uniqueNames = [...new Set(names)].slice(0, 5).join(', ');
+  const card = document.querySelector('.copilot-card').getBoundingClientRect();
+  const cont = document.querySelector('.container').getBoundingClientRect();
+  const zoom = window.visualViewport ? window.visualViewport.scale : 'N/A';
 
   alert(
-    'Screen: ' + winW + 'px | Page Total: ' + scrollW + 'px\n' +
-    'Sticking off right edge: ' + (uniqueNames || 'None')
+    'Card Left: ' + Math.round(card.left) + 'px | Right: ' + Math.round(card.right) + 'px\n' +
+    'Card Width: ' + Math.round(card.width) + 'px\n' +
+    'Container Left: ' + Math.round(cont.left) + 'px | Right: ' + Math.round(cont.right) + 'px\n' +
+    'Safari Zoom Level: ' + zoom
   );
 });
     
