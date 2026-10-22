@@ -653,7 +653,7 @@ footer {
 
 @media (max-width: 768px) {
   html, body {
-    overflow-x: hidden; 
+    overflow-x: clip; 
     max-width: 100%;
     width: 100%;
     margin: 0;
