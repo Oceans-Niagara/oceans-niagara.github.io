@@ -320,11 +320,11 @@ html {
   scroll-behavior: smooth;
 }
 
-.tool-section {
+.architecture-section {
   scroll-margin-top: 20vh;
 }
 
-.tool-section::before {
+.architecture-section::before {
   content: "";
   display: block;
   
@@ -609,12 +609,12 @@ html {
     max-width: 100%;
   }
 
-  .main-layout, .split-layout, .tool-section, .tool-section.reverse {
+  .main-layout, .split-layout, .architecture-section, .architecture-section.reverse {
     flex-direction: column;
     align-items: center;
   }
 
-  .right-content, .tool-image-container {
+  .right-content, .architecture-image-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -631,33 +631,33 @@ html {
     padding-top: 0 !important;      
   }
 
-  #orchestration.tool-section {
+  #orchestration.architecture-section {
     padding-top: 0 !important;      
     margin-top: 0 !important;       
   }
 
-  .tool-section {
+  .architecture-section {
     padding-top: 10px !important;     
     padding-bottom: 30px !important;  
     margin-top: 0 !important;        
     margin-bottom: 0 !important;     
   }
 
-  .tool-text h3 {
+  .architecture-text h3 {
     margin-top: 15px !important;
     margin-bottom: 10px !important;
   }
 
-  .tool-section ~ .tool-section {
+  .architecture-section ~ .architecture-section {
     padding-top: 0 !important;      
   }
   
-  .tool-section ~ .tool-section .tool-text {
+  .architecture-section ~ .architecture-section .architecture-text {
     margin-top: 0 !important;        
     padding-top: 0 !important;
   }
 
-  .tool-section ~ .tool-section h3 {
+  .architecture-section ~ .architecture-section h3 {
     margin-top: 5px !important;      
   }
 
