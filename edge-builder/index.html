@@ -154,13 +154,6 @@
     inputField.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') sendRagQuery();
     });
-
-    window.addEventListener('load', () => {
-  const card = document.querySelector('.copilot-card').getBoundingClientRect();
-  const leftGap = Math.round(card.left);
-  const rightGap = Math.round(window.innerWidth - card.right);
-  alert('Left Gap: ' + leftGap + 'px | Right Gap: ' + rightGap + 'px');
-});
     
   </script>
 
