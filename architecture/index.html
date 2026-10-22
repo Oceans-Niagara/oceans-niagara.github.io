@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oceans Niagara - Fleet Mesh Assistant</title>
+  <title>Oceans Niagara - Architecture</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -27,8 +27,8 @@
         <li class="dropdown">
           <a href="/edge-builder/">Edge Builder ▾</a>
           <ul class="dropdown-menu">
-            <li><a href="/intro-diy-guide/">Intro DIY Guide</a></li>
             <li><a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download="fleet-mesh.zip" title="Click to download zip, then double-click the 'Run' file for your operating system (Windows, Mac, or Linux).">Free Fleet Mesh Orchestrator</a></li>
+            <li><a href="/intro-diy-guide/">Intro DIY Guide</a></li>
           </ul>
         </li>
       </ul>
@@ -36,125 +36,76 @@
   </nav>
 
   <header class="page-banner">
-    <h1>Edge Builder</h1>
+    <h1>"ON" Decentralized Edge Execution</h1>
   </header>
 
   <main class="container">
-    <div class="edge-builder-grid">
-      <div class="copilot-card" style="height: 500px;">
-        <div class="copilot-chat" id="chat-box">
-          <div class="message assistant">
-            Check here for questions about the 'ON' framework or free Fleet Mesh Orchestrator. You can also email connect@oceansniagara.com.
-          </div>
-        </div>
-        
-        <div class="copilot-input-area">
-          <input type="text" id="userInput" placeholder="Ask about the 'ON' framework or free Fleet Mesh Orchestrator..." style="flex: 1; border: 1px solid #ccc; border-radius: 4px; padding: 8px 12px; outline: none;">
-          <button id="send-btn" style="background-color: var(--dark-teal); color: white; border: none; padding: 8px 16px; margin-left: 8px; border-radius: 4px; cursor: pointer; font-weight: 600;">Send</button>
-        </div>
+
+    <section id="orchestration" class="architecture-section">
+      <div class="architecture-text">
+        <h3>Hands-Off Orchestration</h3>
+        <p>Overcome degraded operating environments and connect machines in ways that work for your mission. We use open technologies so you and your business can control your data and reduce reliance on third-party software and storage providers.</p>
       </div>
-
-      <div class="edge-builder-sidebar">
-        <a href="/intro-diy-guide/" class="btn-side-diy">
-          <span class="badge-pop">No Solder, No Stress</span>
-          Intro DIY Guide
-          <span class="subtext">Hardware Decoded & Starter Kits →</span>
-        </a>
-
-        <a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh.zip" download="fleet-mesh.zip" title="Click to download zip, extract all files, then double-click the 'Run' file for your operating system (Windows, Mac, or Linux)." class="btn-side-download">
-          Free Fleet Mesh Orchestrator
-          <span class="subtext">Download fleet-mesh.zip ⤓</span>
-        </a>
-
-        <a href="https://github.com/Oceans-Niagara/fleet-mesh/releases/download/v1.0.0/fleet-mesh-ros2.zip" download="fleet-mesh-ros2.zip" title="Download ROS 2 Companion Node package (Python / rclpy / CBOR bridge)." class="btn-side-download" style="background: #ffffff; color: var(--text-dark);">
-          <span class="badge-pop" style="background-color: #0284c7; margin-bottom: 6px; font-size: 0.75rem;">*New Companion</span>
-          ROS 2 Companion Node
-          <span class="subtext" style="color: #555555;">Download fleet-mesh-ros2.zip ⤓</span>
-        </a>
-
-        <a href="https://github.com/Oceans-Niagara/fleet-mesh" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--dark-teal); text-decoration: none; padding: 4px 0;">
-          View Source & Documentation on GitHub ↗
-        </a>
+      <div class="architecture-image-container">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350" alt="Analytics View" class="small-image">
       </div>
-    </div>
+    </section>
+
+    <section id="physical-reality" class="architecture-section reverse">
+      <div class="architecture-text">
+        <h3>Physical Reality</h3>
+        <p>Move your operations towards the physical limits set by natural law. Oceans Niagara's Decentralized Edge Execution Framework "ON" is grounded in communications theory, molecular biology, entropy, and the path of least resistance.</p>
+      </div>
+      <div class="architecture-image-container">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800" alt="Process Automation Graphic" class="small-image">
+      </div>
+    </section>
+
+    <section id="error-prevention" class="architecture-section">
+      <div class="architecture-text">
+        <h3>Error Prevention</h3>
+        <p>We leverage a highly efficient application-layer forward error correction (FEC) fountain code designed for resilient data transmission over unpredictable networks. It operates by breaking a file into a specific number of source blocks and generating an infinite stream of repair symbols. The receiving device does not need to request missing packets when drops occur; it only needs to collect any combination of packets slightly exceeding the original file size to fully reconstruct the data. This eliminates round-trip latency, making it vital for multicast streaming, satellite communications, and distributed file transfers.</p>
+      </div>
+      <div class="architecture-image-container">
+        <img src="../flowlogo.png" alt="simple waterfall graphic" class="small-image">
+      </div>
+    </section>
+
+    <section id="compute-efficiency" class="architecture-section reverse">
+      <div class="architecture-text">
+        <h3>Compute Efficiency</h3>
+        <p>Whenever possible, we build our core systems using Rust, a highly performant systems programming language designed for safety and speed. It eliminates common bugs like null pointer exceptions and memory leaks without the overhead of a garbage collector. Instead, it relies on a strict compile-time ownership model to manage memory automatically. Our developers leverage it to solve complex orchestration challenges across varying hardware, delivering the raw speed of C++ alongside modern memory safety guarantees.</p>
+      </div>
+      <div class="architecture-image-container">
+        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=350" alt="Integration Framework Graphic" class="small-image">
+      </div>
+    </section>
+
+    <section id="latency-reduction" class="architecture-section">
+      <div class="architecture-text">
+        <h3>Latency Reduction</h3>
+        <p>Our systems run compilation targets inside a fast, lightweight, and secure binary instruction format that is revolutionizing decentralized and edge computing. Its compact footprint and rapid startup times allow code to deploy instantly across distributed global networks, executing much closer to the end user than traditional containers or virtual machines. Because it runs inside a highly isolated, language-agnostic sandbox, it provides a secure environment for running untrusted code on multi-tenant edge nodes and decentralized networks. This enables developers to deploy complex, near-native performance logic globally with minimal CPU overhead, low memory usage, and zero vendor lock-in.</p>
+      </div>
+      <div class="architecture-image-container">
+        <img src="../textlogo.png" alt="Security Terminal Visual" class="small-image">
+      </div>
+    </section>
+
+    <section id="what-vs-where" class="architecture-section reverse">
+      <div class="architecture-text">
+        <h3>What vs. Where</h3>
+        <p>Our systems often leverage peer-to-peer, decentralized protocols that are changing the internet. Instead of relying on location-based addressing, they use content-based addressing, assigning every file a unique cryptographic hash. Users retrieve data directly from the nearest nodes possessing that specific hash, creating a more resilient network. This structure eliminates central points of failure, cuts bandwidth costs, bypasses server censorship, and ensures that data remains accessible even if the original publisher goes offline.</p>
+      </div>
+      <div class="architecture-image-container">
+        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=400" alt="Security Terminal Visual" class="small-image">
+      </div>
+    </section>
+
   </main>
 
   <footer>
     <p>&copy; 2026 Oceans Niagara. All rights reserved.</p>
   </footer>
-
-  <script>
-    const chatBox = document.getElementById('chat-box');
-    const sendBtn = document.getElementById('send-btn');
-    const inputField = document.getElementById('userInput');
-
-    async function sendRagQuery() {
-      const query = inputField.value.trim();
-      if (!query) return;
-
-      inputField.disabled = true;
-      sendBtn.disabled = true;
-
-      const userMsg = document.createElement('div');
-      userMsg.className = 'message user';
-      userMsg.textContent = query;
-      chatBox.appendChild(userMsg);
-      
-      inputField.value = '';
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      const loadingId = 'loading-' + Date.now();
-      const assistantMsg = document.createElement('div');
-      assistantMsg.className = 'message assistant';
-      assistantMsg.id = loadingId;
-      assistantMsg.textContent = 'Thinking...';
-      chatBox.appendChild(assistantMsg);
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      try {
-        const response = await fetch('https://weathered-breeze-273c.ph-morton.workers.dev', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userQuery: query })
-        });
-        const data = await response.json();
-        const loadingElement = document.getElementById(loadingId);
-        
-        if (data.answer) {
-          if (data.answer.includes("\n\nSources: ")) {
-            const parts = data.answer.split("\n\nSources: ");
-            const mainText = parts[0];
-            const sourceFiles = parts[1];
-
-            loadingElement.innerHTML = `
-              <div class="answer-text" style="margin-bottom: 8px;">${mainText}</div>
-              <div class="sources-badge" style="font-size: 0.75rem; color: #94a3b8; border-top: 1px solid #334155; padding-top: 4px; display: inline-block;">
-                📁 Reference: <span style="font-style: italic;">${sourceFiles}</span>
-              </div>
-            `;
-          } else {
-            loadingElement.textContent = data.answer;
-          }
-        } else if (data.error) {
-          loadingElement.textContent = `Orchestration Error: ${data.error}`;
-        } else {
-          loadingElement.textContent = "I couldn't generate an answer right now.";
-        }
-      } catch (error) {
-        document.getElementById(loadingId).textContent = "Error parsing the response from the edge server.";
-      } finally {
-        inputField.disabled = false;
-        sendBtn.disabled = false;
-        inputField.focus();
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    }
-
-    sendBtn.addEventListener('click', sendRagQuery);
-    inputField.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendRagQuery();
-    });
-  </script>
-
+  
 </body>
 </html>
