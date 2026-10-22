@@ -661,11 +661,11 @@ footer {
   }
 
   .container {
+    width: auto !important;                
     max-width: 100% !important;
-    width: 100% !important;
-    margin: 35px auto 0 auto !important;   
-    padding-left: 20px !important;  
-    padding-right: 36px !important; 
+    margin: 35px 16px 0 16px !important;  
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     padding-top: 0 !important;
     box-sizing: border-box !important;
   }
