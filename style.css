@@ -7,6 +7,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 110px;
 }
 
 * {
@@ -24,7 +25,7 @@ body {
 
 nav {
   background-color: var(--dark-teal);
-  position: webkit-sticky;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -162,6 +163,7 @@ nav {
   gap: 40px;
   padding: 40px 0;
   border-bottom: 1px solid #e2e8f0;
+  scroll-margin-top: max(125px, 20vh);
 }
 
 .architecture-section:last-child {
@@ -196,48 +198,13 @@ nav {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.split-layout {
-  display: flex;
-  gap: 50px;
-  align-items: flex-start; 
-}
-
-.left-half {
-  flex: 1;
-}
-
-.right-half {
-  flex: 1;
-  display: flex;          
-  flex-direction: column; 
-  align-items: stretch;   
-}
-
-.left-half h2, .right-half h2 {
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  color: var(--dark-teal);
-  margin-top: 0;          
-  padding-top: 0;
-}
-
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; 
-  height: 0;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-}
-
-.video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  border: 0;
+.edge-builder-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: start;
 }
 
 .copilot-card {
@@ -246,7 +213,7 @@ nav {
   background: white;
   display: flex;
   flex-direction: column;
-  height: 380px;
+  height: 500px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
@@ -307,32 +274,84 @@ nav {
   transition: background-color 0.2s;
 }
 
-footer {
+.sources-badge {
+  font-size: 0.75rem;
+  color: #64748b;
+  border-top: 1px solid #cbd5e1;
+  padding-top: 4px;
+  margin-top: 6px;
+}
+
+.edge-builder-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.btn-side-download {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 30px;
+  background: var(--dark-teal);
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #000000;
+  padding: 24px 20px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  min-height: 120px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-side-download:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px #000000;
+  color: #ffffff;
+}
+
+.btn-side-download .subtext {
   font-size: 0.85rem;
-  color: #666;
-  background: #eaeaea;
-  margin-top: 50px;
+  font-weight: 400;
+  margin-top: 8px;
+  opacity: 0.95;
 }
 
-html {
-  scroll-behavior: smooth;
+.btn-side-diy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+  color: var(--dark-teal);
+  border: 2px solid var(--dark-teal);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #000000;
+  padding: 24px 20px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  min-height: 120px;
+  position: relative;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.architecture-section {
-  scroll-margin-top: 20vh;
+.btn-side-diy:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px #000000;
+  color: var(--dark-teal);
 }
 
-.architecture-section::before {
-  content: "";
-  display: block;
-  
-  height: 70px;        
-  margin-top: -70px;   
-  
-  visibility: hidden;
-  pointer-events: none;
+.btn-side-diy .subtext {
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-top: 6px;
+  color: #333333;
 }
 
 .dealer-banner {
@@ -372,7 +391,7 @@ html {
   text-transform: uppercase;
   display: inline-block;
   box-shadow: 2px 2px 0px #000;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .section-card {
@@ -568,28 +587,45 @@ html {
   display: block;
 }
 
-@media (max-width: 768px) {
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 0.85rem;
+  color: #666;
+  background: #eaeaea;
+  margin-top: 50px;
+}
 
+@media (max-width: 860px) {
+  .edge-builder-grid {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .edge-builder-sidebar {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
   html, body {
     overflow-x: clip; 
     width: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
   }
 
-  *, *:before, *:after {
-    box-sizing: border-box;
-  }
-
-  .container, .main-layout, .split-layout, .left-half, .right-half, .left-content, .right-content {
+  .container, 
+  .main-layout, 
+  .left-content, 
+  .right-content {
     max-width: 100% !important;
     width: 100% !important;
     padding-left: 15px !important;  
     padding-right: 15px !important; 
     margin-left: 0 !important;
     margin-right: 0 !important;
-    box-sizing: border-box !important;
   }
 
   .large-image {
@@ -599,22 +635,21 @@ html {
     height: auto;
   }
 
-  .copilot-card, .video-wrapper {
+  .copilot-card {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
   }
-  .video-wrapper iframe {
-    width: 100%;
-    max-width: 100%;
-  }
 
-  .main-layout, .split-layout, .architecture-section, .architecture-section.reverse {
+  .main-layout, 
+  .architecture-section, 
+  .architecture-section.reverse {
     flex-direction: column;
     align-items: center;
   }
 
-  .right-content, .architecture-image-container {
+  .right-content, 
+  .architecture-image-container {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -641,6 +676,7 @@ html {
     padding-bottom: 30px !important;  
     margin-top: 0 !important;        
     margin-bottom: 0 !important;     
+    scroll-margin-top: 110px;
   }
 
   .architecture-text h3 {
@@ -666,7 +702,7 @@ html {
   }
 
   nav {
-    position: webkit-sticky !important;
+    position: -webkit-sticky !important;
     position: sticky !important;
     top: 0 !important;
     left: 0 !important;
@@ -691,11 +727,7 @@ html {
     font-size: 0.9rem;      
   }
 
-  .right-half {
-    margin-top: 30px;
-  }
-
-    .dealer-banner h1 {
+  .dealer-banner h1 {
     font-size: 1.6rem;
   }
 
@@ -719,5 +751,4 @@ html {
     min-height: 44px;
     text-align: center;
   }
-  
 }
