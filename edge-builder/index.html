@@ -156,16 +156,7 @@
     });
 
     window.addEventListener('load', () => {
-  const card = document.querySelector('.copilot-card').getBoundingClientRect();
-  const cont = document.querySelector('.container').getBoundingClientRect();
-  const zoom = window.visualViewport ? window.visualViewport.scale : 'N/A';
-
-  alert(
-    'Card Left: ' + Math.round(card.left) + 'px | Right: ' + Math.round(card.right) + 'px\n' +
-    'Card Width: ' + Math.round(card.width) + 'px\n' +
-    'Container Left: ' + Math.round(cont.left) + 'px | Right: ' + Math.round(cont.right) + 'px\n' +
-    'Safari Zoom Level: ' + zoom
-  );
+  alert('Physical Screen: ' + screen.width + 'px | Browser Window: ' + window.innerWidth + 'px');
 });
     
   </script>
