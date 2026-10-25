@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oceans Niagara — Resilient Edge Data Transit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-logo">Oceans Niagara, LLC</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="https://github.com/Oceans-Niagara/zenoh-fountain-transport" target="_blank" rel="noopener">GitHub ↗</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-banner">
+    <h1>Resilient Edge Data Transit</h1>
+  </header>
+
+  <main class="container">
+    <div class="main-layout">
+   
+      <div class="left-content">
+        <h2>Data Delivery in Challenging Environments</h2>
+        <p>
+          Oceans Niagara focuses on communications resilience for autonomous machines and distributed systems operating across Disconnected, Intermittent, and Low-Bandwidth (DDIL) networks.
+        </p>
+
+        <h2 id="research">Active Research: Zero-Retransmission Asset Sync</h2>
+        <p>
+          In large-scale field deployments—such as agricultural robotics, autonomous turf machinery, environmental sensor grids, and industrial rovers—patchy wireless links cause sustained packet loss. Standard acknowledgment-based protocols (TCP or ARQ pub/sub) trigger severe ACK/NACK storms when broadcasting large binary payloads to multiple nodes over constrained links.
+        </p>
+        <p>
+          We are prototyping a zero-retransmission distribution pipeline pairing <strong>Eclipse Zenoh</strong> with <strong>RaptorQ (RFC 6330)</strong> forward error correction. By streaming rateless mathematical droplets rather than sequential chunks, edge nodes can reconstruct full operational assets—such as runtime configurations, perception bounds, state models, or WASM execution routines—from any random subset of broadcast packets.
+        </p>
+
+        <a href="https://github.com/Oceans-Niagara/zenoh-fountain-transport" target="_blank" rel="noopener" class="btn-action">
+          View Open-Source Prototype on GitHub →
+        </a>
+      </div>
+
+      <div class="right-content">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=450" alt="Autonomous Edge Machine" class="large-image">
+      </div>
+    </div>
+
+    <!-- Architectural Pillars -->
+    <section class="section-card" id="architecture" style="margin-top: 50px;">
+      <h2>Core Architecture Pillars</h2>
+      <div class="component-grid">
+        <div class="component-box">
+          <h4>Rateless Erasure Coding</h4>
+          <p>RaptorQ fountain codes eliminate acknowledgment overhead. Receivers reconstruct complete binary payloads from any valid subset of droplets caught.</p>
+        </div>
+        <div class="component-box">
+          <h4>Self-Describing OTI</h4>
+          <p>Every packet carries a 16-byte metadata prefix, ensuring drops of initial stream headers never prevent full recovery.</p>
+        </div>
+        <div class="component-box">
+          <h4>Decentralized Pub/Sub</h4>
+          <p>Leverages Eclipse Zenoh for unified telemetry, remote commands, and inter-peer cache repair across ad-hoc radio meshes.</p>
+        </div>
+        <div class="component-box">
+          <h4>Atomic Edge Staging</h4>
+          <p>Crash-proof append operations with explicit <code>fsync</code> boundaries protect edge nodes against sudden field power loss.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Oceans Niagara, LLC. Open-source research licensed under Apache 2.0.</p>
+  </footer>
+  
+</body>
+</html>
