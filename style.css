@@ -42,23 +42,15 @@ nav {
 .left-content h2 { font-size: 1.5rem; margin: 10px 0; color: var(--dark-teal); }
 .left-content p { margin-bottom: 20px; font-size: 1.05rem; }
 .right-content { flex: 0.8; display: flex; justify-content: flex-end; }
+
 .terminal-card {
-  width: 100%;
-  max-width: 450px;
-  background: #11141a;
-  border: 2px solid var(--dark-teal);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+  width: 100%; max-width: 450px; background: #11141a; border: 2px solid var(--dark-teal);
+  border-radius: 8px; overflow: hidden; box-shadow: 6px 6px 0px rgba(0,0,0,0.2);
   font-family: 'Consolas', 'Courier New', monospace;
 }
 .terminal-header {
-  background: #1a1f29;
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-bottom: 1px solid #28303f;
+  background: #1a1f29; padding: 8px 12px; display: flex; align-items: center;
+  gap: 6px; border-bottom: 1px solid #28303f;
 }
 .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 .dot.red { background: #ff5f56; }
@@ -66,11 +58,8 @@ nav {
 .dot.green { background: #27c93f; }
 .terminal-title { color: #8892b0; font-size: 0.75rem; margin-left: auto; }
 .terminal-body {
-  padding: 16px;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: #ccd6f6;
-  white-space: pre;
+  margin: 0; padding: 16px; font-size: 0.85rem; line-height: 1.5; color: #ccd6f6;
+  white-space: pre; overflow-x: auto;
 }
 .t-dim { color: #8892b0; }
 .t-green { color: #48bb78; font-weight: bold; }
