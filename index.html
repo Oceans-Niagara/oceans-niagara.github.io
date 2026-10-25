@@ -46,14 +46,14 @@
       </div>
 
       <div class="right-content">
-  <div class="terminal-card">
-    <div class="terminal-header">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-      <span class="terminal-title">demo.py — raptorq + zenoh</span>
-    </div>
-    <pre class="terminal-body"><code><span class="t-dim">[*] Simulating 25% Outdoor RF Loss:</span>
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">demo.py — raptorq + zenoh</span>
+          </div>
+          <pre class="terminal-body"><code><span class="t-dim">[*] Simulating 25% Outdoor RF Loss:</span>
 <span class="t-green">.x........x......x..x...xxx.x.xxx......x.x</span>
 <span class="t-green">........xx...x......</span>
 
@@ -66,8 +66,9 @@
 
 <span class="t-highlight">[SUCCESS] Verified bit-exact.</span>
 <span class="t-highlight">Zero retransmissions requested.</span></code></pre>
-  </div>
-</div>
+        </div>
+      </div>
+    </div> <!-- FIXED: Closed .main-layout here -->
 
     <!-- Architectural Pillars -->
     <section class="section-card" id="architecture" style="margin-top: 50px;">
@@ -77,14 +78,22 @@
           <h4>Rateless Erasure Coding</h4>
           <p>RaptorQ fountain codes eliminate acknowledgment overhead. Receivers reconstruct complete binary payloads from any valid subset of droplets caught.</p>
         </div>
+
         <div class="component-box">
           <h4>Self-Describing OTI</h4>
           <p>Every packet carries a 16-byte metadata prefix, ensuring drops of initial stream headers never prevent full recovery.</p>
         </div>
+
+        <div class="component-box">
+          <h4>Content-Addressed Integrity</h4>
+          <p>Payloads are verified against cryptographic SHA-256 Content Identifiers (CIDs) and AEAD transit encryption before execution, preventing corrupt state from reaching machine hardware.</p>
+        </div>
+
         <div class="component-box">
           <h4>Decentralized Pub/Sub</h4>
           <p>Leverages Eclipse Zenoh for unified telemetry, remote commands, and inter-peer cache repair across ad-hoc radio meshes.</p>
         </div>
+
         <div class="component-box">
           <h4>Atomic Edge Staging</h4>
           <p>Crash-proof append operations with explicit <code>fsync</code> boundaries protect edge nodes against sudden field power loss.</p>
