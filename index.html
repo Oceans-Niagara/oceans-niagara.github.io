@@ -3,116 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oceans Niagara — Resilient Edge Data Transit</title>
+  <title>Oceans Niagara</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .stealth-card {
+      max-width: 600px;
+      padding: 40px 20px;
+    }
+    .stealth-card h1 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .stealth-card p {
+      font-size: 1.1rem;
+      opacity: 0.75;
+      line-height: 1.6;
+      margin: 0 0 24px 0;
+    }
+    .stealth-footer {
+      font-size: 0.85rem;
+      opacity: 0.4;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
 
-  <nav>
-    <div class="nav-container">
-      <a href="/" class="nav-logo">Oceans Niagara, LLC</a>
-      <ul class="nav-links">
-        <li><a href="#research">Research</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="https://github.com/Oceans-Niagara/zenoh-fountain-transport" target="_blank" rel="noopener">GitHub ↗</a></li>
-      </ul>
+  <div class="stealth-card">
+    <h1>Oceans Niagara</h1>
+    <p>
+      High-assurance edge synchronization and distributed control middleware.
+    </p>
+    <div class="stealth-footer">
+      Private Systems R&D &bull; &copy; 2026 Oceans Niagara, LLC
     </div>
-  </nav>
+  </div>
 
-  <header class="page-banner">
-    <h1>Resilient Edge Data Transit</h1>
-  </header>
-
-  <main class="container">
-    <div class="main-layout">
-   
-      <div class="left-content">
-        <h2>Data Delivery in Challenging Environments</h2>
-        <p>
-          Oceans Niagara focuses on communications resilience for autonomous machines and distributed systems operating across Disconnected, Intermittent, and Low-Bandwidth (DDIL) networks.
-        </p>
-
-        <h2 id="research">Labs: Zero-Retransmission Asset Sync</h2>
-        <p>
-          In large-scale field deployments—such as agricultural robotics, autonomous turf machinery, environmental sensor grids, and industrial rovers—patchy wireless links cause sustained packet loss. Standard acknowledgment-based protocols (TCP or ARQ pub/sub) trigger severe ACK/NACK storms when broadcasting large binary payloads to multiple nodes over constrained links.
-        </p>
-        <p>
-          We are prototyping a zero-retransmission distribution pipeline pairing <strong>Eclipse Zenoh</strong> with <strong>RaptorQ (RFC 6330)</strong> forward error correction. By streaming rateless mathematical droplets rather than sequential chunks, edge nodes can reconstruct full operational assets—such as runtime configurations, perception bounds, state models, or WASM execution routines—from any random subset of broadcast packets.
-        </p>
-
-        <a href="https://github.com/Oceans-Niagara/zenoh-fountain-transport" target="_blank" rel="noopener" class="btn-action">
-          View Open-Source Prototype on GitHub →
-        </a>
-      </div>
-
-      <div class="right-content">
-        <div class="terminal-card">
-          <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="terminal-title">demo.py — raptorq + zenoh</span>
-          </div>
-          <pre class="terminal-body"><code><span class="t-dim">[*] Simulating 25% Outdoor RF Loss:</span>
-<span class="t-green">.x........x......x..x...xxx.x.xxx......x.x</span>
-<span class="t-green">........xx...x......</span>
-
-<span class="t-dim">[*] Packets Sent   :</span> 70
-<span class="t-dim">[*] Packets Lost   :</span> 16 (Interference)
-<span class="t-dim">[*] Packets Caught :</span> 54 (Needed: 50)
-
-<span class="t-dim">[*] Matrix Solve   :</span> 1.11 ms
-<span class="t-dim">[*] CID (SHA-256)  :</span> bbb212c8...
-
-<span class="t-highlight">[SUCCESS] Verified bit-exact.</span>
-<span class="t-highlight">Zero retransmissions requested.</span></code></pre>
-        </div>
-      </div>
-    </div> 
-
-    <!-- Architectural Pillars -->
-    <section class="section-card" id="architecture" style="margin-top: 50px;">
-      <h2>Core Architecture Pillars</h2>
-      <div class="component-grid">
-        <div class="component-box">
-          <h4>Rateless Erasure Coding</h4>
-          <p>RaptorQ fountain codes eliminate acknowledgment overhead. Receivers reconstruct complete binary payloads from any valid subset of droplets caught.</p>
-        </div>
-
-        <div class="component-box">
-          <h4>Self-Describing OTI</h4>
-          <p>Every packet carries a 22-byte metadata prefix, ensuring drops of initial stream headers never prevent full recovery.</p>
-        </div>
-
-        <div class="component-box">
-          <h4>Content-Addressed Integrity</h4>
-          <p>Payloads are verified against cryptographic SHA-256 Content Identifiers (CIDs) and AEAD transit encryption before execution, preventing corrupt state from reaching machine hardware.</p>
-        </div>
-
-        <div class="component-box">
-          <h4>Decentralized Pub/Sub</h4>
-          <p>Leverages Eclipse Zenoh for unified telemetry, remote commands, and inter-peer cache repair across ad-hoc radio meshes.</p>
-        </div>
-
-        <div class="component-box">
-          <h4>Atomic Edge Staging</h4>
-          <p>Crash-proof append operations with explicit <code>fsync</code> boundaries protect edge nodes against sudden field power loss.</p>
-        </div>
-
-        <div class="component-box">
-          <h4>Field Trials & Inquiries</h4>
-          <p>
-            Interested in deploying fountain transport or testing across custom RF links? Reach our team at 
-            <a href="mailto:connect@oceansniagara.com" style="color: inherit; text-decoration: underline;">connect@oceansniagara.com</a>.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2026 Oceans Niagara, LLC. Open-source research licensed under Apache 2.0.</p>
-  </footer>
-  
 </body>
 </html>
