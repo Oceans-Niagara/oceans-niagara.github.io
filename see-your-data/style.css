@@ -431,14 +431,31 @@ tr:last-child td { border-bottom: none; }
 
 @media (max-width: 980px) {
   .app-shell { grid-template-columns: 1fr; }
-  .main-content { order: -1; padding: 16px; }
+  .main-content { display: contents; }
+
+  .page-header {
+    order: 1;
+    padding: 16px 16px 4px;
+  }
   .sidebar {
+    order: 2;
     position: static;
     height: auto;
     overflow-y: visible;
     border-right: none;
     border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
+  .toolbar {
+    order: 3;
+    padding: 16px 16px 0;
+    margin-bottom: 12px;
+  }
+  #simple-view, #bench-view, #snapshots-section {
+    order: 4;
+    padding: 0 16px 24px;
+  }
+
   .hero-grid, .bench-metrics-grid, .bench-metrics-grid.four-col {
     grid-template-columns: 1fr;
   }
