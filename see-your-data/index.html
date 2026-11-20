@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>See Your Data - Digital Optics & Structure Bench</title>
+  <link rel="stylesheet" href="./style.css?v=3" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h2>Input Data</h2>
+        <div class="segmented" id="source-type-tabs">
+          <button type="button" class="seg-btn active" data-source="text">Text / Code</button>
+          <button type="button" class="seg-btn" data-source="image">Image</button>
+        </div>
+
+        <!-- TEXT CONTROLS -->
+        <div id="text-controls">
+          <div class="label-row"><span>Quick Presets</span></div>
+          <div class="preset-grid">
+            <button type="button" class="btn-secondary" data-preset="prose">Prose</button>
+            <button type="button" class="btn-secondary" data-preset="repetition">Repetition</button>
+            <button type="button" class="btn-secondary" data-preset="code">Python Code</button>
+            <button type="button" class="btn-secondary" data-preset="random">Random Static</button>
+          </div>
+
+          <label class="field-label" for="text-file-input">Upload text/code file</label>
+          <input type="file" id="text-file-input" accept=".txt,.py,.js,.ts,.md,.json,.csv,.html" />
+          <div id="text-file-info" class="hint-text hidden"></div>
+
+          <label class="field-label" for="text-input">Or enter text / code</label>
+          <textarea id="text-input" rows="5"></textarea>
+
+          <label class="checkbox-row" title="Unpacks every character into raw 1s and 0s—revealing hidden binary waves even in repeated letters like 'aaaa'.">
+            <input type="checkbox" id="hidden-binary" />
+            <span>Hidden Binary (Bit-Level)</span>
+          </label>
+
+          <div class="two-col-fields">
+            <div>
+              <label class="field-label" for="text-mode">1D Encoding</label>
+              <select id="text-mode">
+                <option value="utf8">utf8</option>
+                <option value="auto">auto</option>
+                <option value="bits">bits</option>
+                <option value="word_lengths">word_lengths</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="text-layout">2D Mask</label>
+              <select id="text-layout">
+                <option value="grating">grating</option>
+                <option value="matrix">matrix</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMAGE CONTROLS -->
+        <div id="image-controls" class="hidden">
+          <label class="field-label" for="image-sample-select">Image Source</label>
+          <select id="image-sample-select">
+            <option value="cloud">Sample: Organic 1/f Cloud</option>
+            <option value="ripples">Sample: Concentric Ripples</option>
+            <option value="grid">Sample: Geometric Grid</option>
+            <option value="noise">Sample: White Noise</option>
+            <option value="upload">Upload your own...</option>
+          </select>
+
+          <div id="image-upload-wrap" class="hidden">
+            <label class="field-label" for="image-file-input">Upload PNG / JPEG / WebP</label>
+            <input type="file" id="image-file-input" accept="image/*" />
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="sidebar-section">
+        <h2>Light Settings</h2>
+        <div class="radio-stack">
+          <label class="radio-row" title="Bends light like varying glass thickness (bright caustics).">
+            <input type="radio" name="optics-mode" value="phase" checked />
+            <span>Phase Filter (Bends Light)</span>
+          </label>
+          <label class="radio-row" title="Blocks light like a dark film slide.">
+            <input type="radio" name="optics-mode" value="amplitude" />
+            <span>Amplitude Filter (Blocks Light)</span>
+          </label>
+        </div>
+
+        <label class="checkbox-row" title="Shines Red, Green, and Blue light together so frequencies split into rainbow fringes.">
+          <input type="checkbox" id="white-light" />
+          <span>Polychromatic White Light (RGB)</span>
+        </label>
+
+        <div id="wavelength-wrap">
+          <div class="slider-header">
+            <label for="wavelength-slider">Laser Wavelength</label>
+            <span id="wavelength-val" class="mono">532 nm</span>
+          </div>
+          <input type="range" id="wavelength-slider" min="380" max="750" step="2" value="532" />
+        </div>
+
+        <div class="slider-wrap">
+          <div class="slider-header">
+            <label for="distance-slider">Propagation Distance z</label>
+            <span id="distance-val" class="mono">25 mm</span>
+          </div>
+          <input type="range" id="distance-slider" min="0" max="100" step="1" value="25" />
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" id="show-phi" checked />
+          <span>Overlay Golden Ratio (φ) Grid</span>
+        </label>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <header class="page-header">
+        <h1>See Your Data - Digital Optics &amp; Structure Bench</h1>
+        <p class="subtitle">Use light to reveal repetition, structure, and chaos in any text, code, or image.</p>
+      </header>
+
+      <!-- VIEW SWITCHER + SNAPSHOT BAR -->
+      <div class="toolbar">
+        <div class="segmented" id="view-mode-tabs">
+          <button type="button" class="seg-btn active" data-view="simple">Simple View</button>
+          <button type="button" class="seg-btn" data-view="bench">Optical Bench (Detailed)</button>
+        </div>
+
+        <div class="snapshot-bar">
+          <button type="button" id="pin-snapshot-btn" class="btn-primary">📌 Pin Snapshot</button>
+          <select id="compare-select" class="hidden">
+            <option value="">None (no comparison)</option>
+          </select>
+          <div id="visual-cmp-tabs" class="segmented small hidden">
+            <button type="button" class="seg-btn active" data-cmp="baseline">Baseline Below</button>
+            <button type="button" class="seg-btn" data-cmp="diff">Difference Map</button>
+          </div>
+          <button type="button" id="clear-snapshots-btn" class="btn-secondary hidden">Clear</button>
+          <span id="compare-tip" class="hint-text">Pin a snapshot to compare inputs &amp; light fields with live deltas.</span>
+        </div>
+      </div>
+
+      <!-- SIMPLE VIEW -->
+      <section id="simple-view">
+        <div class="regime-banner">
+          <span id="regime-pill" class="regime-pill">Signal Regime: —</span>
+          <span id="regime-meta" class="hint-text">Information Density: —</span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="visual-card">
+            <h3 id="simple-left-title">1. Data as a Light Filter</h3>
+            <canvas id="simple-aperture-canvas"></canvas>
+            <p id="simple-left-cap" class="caption"></p>
+          </div>
+          <div class="visual-card">
+            <h3 id="simple-right-title">2. Data-Filtered Light</h3>
+            <canvas id="simple-light-canvas"></canvas>
+            <p id="simple-right-cap" class="caption"></p>
+          </div>
+        </div>
+
+        <div id="simple-compare-row" class="hero-grid compare-row hidden">
+          <div class="visual-card">
+            <canvas id="simple-base-aperture-canvas"></canvas>
+            <p id="simple-base-left-cap" class="caption"></p>
+          </div>
+          <div class="visual-card">
+            <canvas id="simple-base-light-canvas"></canvas>
+            <p id="simple-base-right-cap" class="caption"></p>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="simple-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">1. Detail / Edge Density</div>
+            <div class="metric-value-row">
+              <span id="m-roughness" class="metric-value">—</span>
+              <span id="d-roughness" class="metric-delta"></span>
+            </div>
+            <div class="progress-track"><div id="p-roughness" class="progress-fill"></div></div>
+            <div class="caption">0 = smooth • 50 = balanced detail • 100 = dense sharp edges</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">2. Rhythm &amp; Proportion</div>
+            <div class="metric-value-row">
+              <span id="m-harmony" class="metric-value">—</span>
+              <span id="d-harmony" class="metric-delta"></span>
+            </div>
+            <div class="progress-track"><div id="p-harmony" class="progress-fill"></div></div>
+            <div class="caption">How evenly waves repeat and align with 1.618 symmetry.</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">3. Light Scatter</div>
+            <div class="metric-value-row">
+              <span id="m-scatter" class="metric-value">—</span>
+              <span id="d-scatter" class="metric-delta"></span>
+            </div>
+            <div class="progress-track"><div id="p-scatter" class="progress-fill"></div></div>
+            <div class="caption">How strongly your data splits the beam into glowing patterns.</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-label">Wave Color</div>
+            <div class="swatch-row">
+              <div id="simple-swatch" class="swatch-box"></div>
+              <span id="simple-hex" class="mono">#000000</span>
+            </div>
+            <div class="caption">Slow waves glow warm red; fast jitter shifts violet.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPTICAL BENCH VIEW -->
+      <section id="bench-view" class="hidden">
+        <div class="bench-metrics-grid">
+          <div class="metric-card compact">
+            <div id="b-slope-label" class="metric-label">Fourier Power Slope (β)</div>
+            <div class="metric-value-row">
+              <span id="b-slope" class="metric-value small">—</span>
+              <span id="bd-slope" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Input Fractal Dim</div>
+            <div class="metric-value-row">
+              <span id="b-fd" class="metric-value small">—</span>
+              <span id="bd-fd" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Light Caustic Dim</div>
+            <div class="metric-value-row">
+              <span id="b-lfd" class="metric-value small">—</span>
+              <span id="bd-lfd" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div id="b-phi-label" class="metric-label">φ Match</div>
+            <div class="metric-value-row">
+              <span id="b-phi" class="metric-value small">—</span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Spectral Entropy</div>
+            <div class="metric-value-row">
+              <span id="b-spec-ent" class="metric-value small">—</span>
+              <span id="bd-spec-ent" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">CIE Spectral Color</div>
+            <div class="swatch-row">
+              <div id="bench-swatch" class="swatch-box small"></div>
+              <span id="bench-hex" class="mono small-txt">#000000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bench-metrics-grid four-col">
+          <div class="metric-card compact">
+            <div class="metric-label">Shannon Entropy (bits)</div>
+            <div class="metric-value-row">
+              <span id="b-shannon" class="metric-value small">—</span>
+              <span id="bd-shannon" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Compressibility (deflate)</div>
+            <div class="metric-value-row">
+              <span id="b-compress" class="metric-value small">—</span>
+              <span id="bd-compress" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Scintillation Index (σ²)</div>
+            <div class="metric-value-row">
+              <span id="b-scint" class="metric-value small">—</span>
+              <span id="bd-scint" class="metric-delta"></span>
+            </div>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-label">Signal Regime</div>
+            <div class="metric-value-row">
+              <span id="b-regime" class="metric-value small">—</span>
+            </div>
+          </div>
+        </div>
+
+        <details class="field-guide">
+          <summary>Field Guide (what the metrics mean)</summary>
+          <ul>
+            <li><strong>Fourier Power Slope (β)</strong> <em>(how fast waves fade across scales)</em> — <code>0</code> = white static, <code>1–2.5</code> = natural flow, <code>&gt;2.5</code> = ultra-smooth.</li>
+            <li><strong>Input Fractal Dim</strong> <em>(surface jaggedness of your data)</em> — <code>1.0</code> = clean smooth shape; <code>2.0</code> = dense space-filling texture.</li>
+            <li><strong>Light Caustic Dim</strong> <em>(complexity of the projected light web)</em> — Measures how intricately the beam splits at distance <code>z</code>.</li>
+            <li><strong>Golden Ratio (φ) Match</strong> <em>(alignment with 1.618:1 symmetry)</em> — Checks dominant wave ratios (text) or frame shape (images).</li>
+            <li><strong>Shannon Entropy</strong> <em>(unpredictability per character or pixel)</em> — Low = few repeated symbols; high = maximum variety.</li>
+            <li><strong>Spectral Entropy</strong> <em>(evenness across wave speeds)</em> — <code>0</code> = single pure tone or ring; <code>1</code> = flat white noise.</li>
+            <li><strong>Compressibility (deflate)</strong> <em>(how tightly repeating sequences shrink)</em> — Near <code>0</code> = heavy repetition; near <code>1</code> = incompressible static.</li>
+            <li><strong>Scintillation Index (σ²)</strong> <em>(sharpness of bright light twinkling)</em> — <code>0</code> = even glow; <code>&gt;1</code> = intense focused caustics.</li>
+            <li><strong>CIE Spectral Color</strong> <em>(frequency balance as visible light)</em> — Slow waves glow warm red; fast jitter shifts violet.</li>
+            <li><strong>Signal Regime</strong> <em>(overall pattern family)</em> — Groups inputs into <code>Ordered / Repetitive</code>, <code>Structured / Natural</code>, or <code>Chaotic / Static</code>.</li>
+          </ul>
+        </details>
+
+        <hr />
+
+        <div class="hero-grid">
+          <div class="visual-card">
+            <h3>1. Input Optical Filter</h3>
+            <canvas id="bench-aperture-canvas"></canvas>
+            <p id="bench-left-cap" class="caption"></p>
+          </div>
+          <div class="visual-card">
+            <h3 id="bench-right-title">2. Diffraction Field</h3>
+            <canvas id="bench-light-canvas"></canvas>
+            <p id="bench-right-cap" class="caption"></p>
+          </div>
+        </div>
+
+        <div id="bench-compare-row" class="hero-grid compare-row hidden">
+          <div class="visual-card">
+            <canvas id="bench-base-aperture-canvas"></canvas>
+            <p id="bench-base-left-cap" class="caption"></p>
+          </div>
+          <div class="visual-card">
+            <canvas id="bench-base-light-canvas"></canvas>
+            <p id="bench-base-right-cap" class="caption"></p>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- TEXT CHARTS -->
+        <div id="bench-text-plots" class="hero-grid">
+          <div class="visual-card">
+            <div class="card-header-row">
+              <h3>1D Encoded Signal</h3>
+              <div class="card-actions">
+                <button type="button" id="copy-1d-csv" class="btn-secondary btn-xs">Copy CSV</button>
+                <button type="button" id="save-1d-png" class="btn-secondary btn-xs">Save PNG</button>
+              </div>
+            </div>
+            <canvas id="plot-1d-canvas" class="plot-canvas"></canvas>
+            <div class="plot-footer">
+              <span id="plot-1d-readout" class="plot-readout mono">Hover chart to inspect values</span>
+            </div>
+            <p class="caption">Your text converted into a numerical wave (downsampled for large files).</p>
+          </div>
+
+          <div class="visual-card">
+            <div class="card-header-row">
+              <h3>Log-Log Fourier Power Spectrum</h3>
+              <div class="card-actions">
+                <button type="button" id="copy-fft-csv" class="btn-secondary btn-xs">Copy CSV</button>
+                <button type="button" id="save-fft-png" class="btn-secondary btn-xs">Save PNG</button>
+              </div>
+            </div>
+            <canvas id="plot-fft-canvas" class="plot-canvas"></canvas>
+            <div class="plot-footer">
+              <span id="plot-fft-readout" class="plot-readout mono">Hover chart to inspect values</span>
+            </div>
+            <p class="caption">Left = slow broad waves; Right = rapid jitter. A downward diagonal slope means 1/f structure.</p>
+          </div>
+        </div>
+
+        <!-- IMAGE PLOTS -->
+        <div id="bench-image-plots" class="hero-grid hidden">
+          <div class="visual-card">
+            <div class="card-header-row">
+              <h3>2D Fourier Power Spectrum</h3>
+              <div class="card-actions">
+                <button type="button" id="save-psd2d-png" class="btn-secondary btn-xs">Save PNG</button>
+              </div>
+            </div>
+            <canvas id="plot-psd2d-canvas"></canvas>
+            <p class="caption">Center = broad shapes; Outer edges = fine textures. Crosshairs show horizontal/vertical edges.</p>
+          </div>
+          <div class="visual-card">
+            <div class="card-header-row">
+              <h3>Spatial, Geometry &amp; Information Details</h3>
+              <div class="card-actions">
+                <button type="button" id="copy-json-btn" class="btn-secondary btn-xs">Copy JSON</button>
+              </div>
+            </div>
+            <pre id="bench-json-details" class="json-box"></pre>
+            <p class="caption">Higher anisotropy = straight geometric edges; higher chroma = vivid colors.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PINNED SNAPSHOTS TABLE -->
+      <section id="snapshots-section" class="snapshots-section hidden">
+        <hr />
+        <div class="snapshots-header">
+          <h3 id="snapshots-title">Pinned Snapshots (0)</h3>
+          <button type="button" id="download-csv-btn" class="btn-secondary">Download CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table id="snapshots-table">
+            <thead>
+              <tr>
+                <th>Snapshot</th>
+                <th>Type</th>
+                <th>Regime</th>
+                <th>Detail</th>
+                <th>Harmony</th>
+                <th>Scatter</th>
+                <th>Info %</th>
+                <th>Slope β</th>
+                <th>Input FD</th>
+                <th>Light FD</th>
+                <th>Shannon</th>
+                <th>Spec Ent</th>
+                <th>Compress</th>
+                <th>Scint σ²</th>
+                <th>Color</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./app.js?v=3"></script>
+</body>
+</html>
