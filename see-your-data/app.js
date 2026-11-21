@@ -5,7 +5,7 @@ import {
   wavelengthToRgb,
   makeSampleImage,
   loadImageBlob,
-} from "./engine.js?v=4";
+} from "./engine.js?v=5";
 
 // --- PRESETS ---
 function makeRandomStatic(len = 180) {
@@ -370,7 +370,9 @@ function downloadCanvasPng(canvasId, filename) {
 function updateViewVisibility() {
   const isPlay = state.viewMode === "play";
   appShell.classList.toggle("play-mode", isPlay);
-  el("play-view").classList.toggle("hidden", state.viewMode !== "play");
+  el("sidebar-play-controls").classList.toggle("hidden", !isPlay);
+  el("sidebar-full-controls").classList.toggle("hidden", isPlay);
+  el("play-view").classList.toggle("hidden", !isPlay);
   el("simple-view").classList.toggle("hidden", state.viewMode !== "simple");
   el("bench-view").classList.toggle("hidden", state.viewMode !== "bench");
   snapshotBar.classList.toggle("hidden", isPlay);
