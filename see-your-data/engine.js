@@ -340,9 +340,10 @@ export function textTo2dAperture(text, size = 256, layout = "grating", mode = "u
         row[x] = norm[idx];
       }
     }
+    const isCrossed = layout === "crossed";
     for (let y = 0; y < size; y++) {
       for (let x = 0; x < size; x++) {
-        mask[y * size + x] = row[x];
+        mask[y * size + x] = isCrossed ? 0.5 * (row[x] + row[y]) : row[x];
       }
     }
   }
