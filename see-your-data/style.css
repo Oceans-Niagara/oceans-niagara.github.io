@@ -27,6 +27,13 @@ body {
   min-height: 100vh;
 }
 
+.app-shell.play-mode {
+  grid-template-columns: minmax(0, 1fr);
+}
+.app-shell.play-mode .sidebar {
+  display: none;
+}
+
 /* SIDEBAR */
 .sidebar {
   background: var(--surface);
@@ -165,6 +172,7 @@ button {
   padding: 5px 11px;
   font-size: 13px;
   border-radius: 6px;
+  white-space: nowrap;
 }
 .segmented .seg-btn.active {
   background: var(--accent);
@@ -214,6 +222,46 @@ button {
   width: auto;
   min-width: 220px;
   max-width: 340px;
+}
+
+/* QUICK PLAY VIEW */
+.play-stage {
+  max-width: 560px;
+  margin: 8px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.play-box-card canvas {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+.play-live-caption {
+  font-size: 13px;
+  color: var(--text);
+  margin: 10px 0 0;
+  font-weight: 500;
+}
+.play-input-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.play-input-card .field-label {
+  margin-top: 0;
+}
+.play-explainer {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 10px 0 0;
+  line-height: 1.5;
+}
+.play-caveat {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #cbd5e1;
 }
 
 .regime-banner {
@@ -429,64 +477,6 @@ tr:last-child td { border-bottom: none; }
 
 .hidden { display: none !important; }
 
-@media (max-width: 980px) {
-  .app-shell { grid-template-columns: minmax(0, 1fr); }
-  .main-content { display: contents; }
-
-  .page-header,
-  .toolbar,
-  .sidebar,
-  #simple-view,
-  #bench-view,
-  #snapshots-section,
-  .visual-card {
-    min-width: 0;
-  }
-
-  .page-header {
-    order: 1;
-    padding: 16px 16px 4px;
-  }
-  .toolbar {
-    order: 2;
-    padding: 0 16px 14px;
-    margin-bottom: 0;
-  }
-  .snapshot-bar {
-    width: 100%;
-    min-width: 0;
-  }
-  .sidebar {
-    order: 3;
-    position: static;
-    height: auto;
-    overflow-y: visible;
-    border-right: none;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 16px;
-  }
-  #simple-view, #bench-view, #snapshots-section {
-    order: 4;
-    padding: 0 16px 24px;
-  }
-
-  .hero-grid, .bench-metrics-grid, .bench-metrics-grid.four-col {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .simple-metrics-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .snapshot-bar select {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-  }
-  textarea, select, input[type="text"] {
-    font-size: 16px;
-  }
-}
-
 .card-header-row {
   display: flex;
   align-items: center;
@@ -515,4 +505,257 @@ tr:last-child td { border-bottom: none; }
 }
 .plot-canvas {
   cursor: crosshair;
+}
+
+/* ==========================================
+   MOBILE LAYOUT (SPLIT INPUT / OUTPUT)
+   ========================================== */
+@media (max-width: 980px) {
+  .app-shell:not(.play-mode) {
+    grid-template-columns: minmax(136px, 42%) minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px 10px 28px;
+    align-items: start;
+  }
+
+  .app-shell.play-mode {
+    padding: 12px 12px 28px;
+  }
+  .app-shell.play-mode .main-content {
+    display: block;
+    padding: 0;
+  }
+  .app-shell.play-mode .toolbar {
+    display: flex;
+    margin-bottom: 12px;
+  }
+
+  .app-shell:not(.play-mode) .main-content {
+    display: contents;
+  }
+  .app-shell:not(.play-mode) .toolbar {
+    display: contents;
+  }
+
+  .page-header,
+  #view-mode-tabs,
+  .sidebar,
+  #simple-view,
+  #bench-view,
+  .bench-visuals-group,
+  .bench-metrics-group,
+  .field-guide,
+  .snapshot-bar,
+  #snapshots-section,
+  .visual-card {
+    min-width: 0;
+  }
+
+  /* 1. Top: Title + Description, then View Tabs */
+  .app-shell:not(.play-mode) .page-header {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: 2px 2px 0;
+  }
+  .page-header h1 {
+    font-size: 22px;
+  }
+  .subtitle {
+    margin: 2px 0 6px;
+    font-size: 12px;
+  }
+
+  .app-shell:not(.play-mode) #view-mode-tabs {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    max-width: 100%;
+    overflow-x: auto;
+    margin-bottom: 2px;
+  }
+  .segmented .seg-btn {
+    padding: 5px 9px;
+    font-size: 12px;
+  }
+
+  /* 2. Middle Left: Shrunken Input Sidebar */
+  .app-shell:not(.play-mode) .sidebar {
+    grid-column: 1;
+    grid-row: 3 / span 2;
+    position: static;
+    height: auto;
+    overflow-y: visible;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px;
+    gap: 6px;
+  }
+  .sidebar h2 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .sidebar-section {
+    gap: 6px;
+  }
+  .sidebar .preset-grid,
+  .sidebar .two-col-fields {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  .sidebar .segmented {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .sidebar .segmented .seg-btn {
+    padding: 4px 4px;
+    font-size: 11px;
+  }
+  .sidebar .btn-secondary {
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+  .sidebar .field-label,
+  .sidebar .label-row,
+  .sidebar .checkbox-row,
+  .sidebar .radio-row,
+  .sidebar .slider-header {
+    font-size: 11px;
+    margin: 2px 0;
+  }
+  .sidebar textarea,
+  .sidebar select,
+  .sidebar input[type="file"] {
+    padding: 5px 6px;
+    font-size: 16px;
+  }
+  .sidebar textarea {
+    min-height: 74px;
+  }
+
+  /* 3. Middle Right: Shrunken Output Views */
+  .app-shell:not(.play-mode) #simple-view {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+    align-self: start;
+  }
+
+  .app-shell:not(.play-mode) #bench-view:not(.hidden) {
+    display: contents;
+  }
+  .app-shell:not(.play-mode) .bench-visuals-group {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+  }
+  .app-shell:not(.play-mode) .bench-metrics-group {
+    grid-column: 2;
+    grid-row: 4;
+    align-self: start;
+    margin-top: 8px;
+  }
+  .bench-divider {
+    display: none;
+  }
+
+  /* Shrunken visuals & cards inside right column */
+  .regime-banner {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .regime-pill {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+  .hero-grid,
+  .simple-metrics-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .bench-metrics-grid,
+  .bench-metrics-grid.four-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .visual-card {
+    padding: 8px;
+  }
+  .visual-card h3 {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .caption, .hint-text {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+  .card-header-row {
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .btn-xs {
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+
+  .metric-card {
+    padding: 8px 9px;
+  }
+  .metric-card.compact {
+    padding: 6px 7px;
+  }
+  .metric-label {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+  .metric-value {
+    font-size: 16px;
+  }
+  .metric-value.small {
+    font-size: 14px;
+  }
+  .swatch-box {
+    width: 28px;
+    height: 28px;
+  }
+  .swatch-box.small {
+    width: 22px;
+    height: 22px;
+  }
+  #simple-view hr {
+    margin: 10px 0;
+  }
+
+  /* 4. Below Both Columns: Field Guide (Bench View) */
+  .app-shell:not(.play-mode) .field-guide {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  /* 5. Bottom: Pin Bar + Snapshot Table across full width */
+  .app-shell:not(.play-mode) .snapshot-bar {
+    grid-column: 1 / -1;
+    grid-row: 6;
+    width: 100%;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .snapshot-bar select {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .app-shell:not(.play-mode) #snapshots-section {
+    grid-column: 1 / -1;
+    grid-row: 7;
+  }
+  #snapshots-section hr {
+    margin: 10px 0;
+  }
 }
