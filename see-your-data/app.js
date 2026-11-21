@@ -35,10 +35,18 @@ const TEXT_PRESETS = {
   random: makeRandomStatic(),
 };
 
+const PLAY_OPTICS = {
+  opticsMode: "phase",
+  whiteLight: true,
+  wavelengthNm: 532.0,
+  distanceMm: 35.0,
+  showPhi: false,
+};
+
 // --- APP STATE ---
 const state = {
   sourceType: "text",
-  viewMode: "simple",
+  viewMode: "play",
   visualCmpMode: "baseline",
   uploadedText: null,
   uploadedTextName: "",
@@ -54,6 +62,10 @@ const state = {
 
 // --- DOM REFS ---
 const el = (id) => document.getElementById(id);
+const appShell = document.querySelector(".app-shell");
+const snapshotBar = document.querySelector(".snapshot-bar");
+const playTextInput = el("play-text-input");
+const playLiveCaption = el("play-live-caption");
 const textInput = el("text-input");
 const textModeSel = el("text-mode");
 const textLayoutSel = el("text-layout");
@@ -76,6 +88,7 @@ const clearSnapsBtn = el("clear-snapshots-btn");
 const compareTip = el("compare-tip");
 
 textInput.value = TEXT_PRESETS.prose;
+playTextInput.value = TEXT_PRESETS.prose;
 
 // --- CANVAS RENDERING ---
 function buildApertureRgbU8(aperture, h, w, showPhi) {
@@ -354,8 +367,32 @@ function downloadCanvasPng(canvasId, filename) {
   a.click();
 }
 
+function updateViewVisibility() {
+  const isPlay = state.viewMode === "play";
+  appShell.classList.toggle("play-mode", isPlay);
+  el("play-view").classList.toggle("hidden", state.viewMode !== "play");
+  el("simple-view").classList.toggle("hidden", state.viewMode !== "simple");
+  el("bench-view").classList.toggle("hidden", state.viewMode !== "bench");
+  snapshotBar.classList.toggle("hidden", isPlay);
+  el("snapshots-section").classList.toggle("hidden", isPlay || state.snapshots.length === 0);
+}
+
 // --- PIPELINE RUNNERS ---
 async function recomputeAll() {
+  if (state.viewMode === "play") {
+    const txt = playTextInput.value;
+    if (!txt || !txt.trim()) {
+      const c = el("play-light-canvas");
+      c.width = 256; c.height = 256;
+      c.getContext("2d").fillRect(0, 0, 256, 256);
+      playLiveCaption.textContent = "Type anything below to shine white light through your words.";
+      return;
+    }
+    state.features = await extractInputFeatures({ text: txt, textMode: "utf8", textLayout: "grating" });
+    runOpticsAndRender();
+    return;
+  }
+
   const textMode = hiddenBinaryChk.checked ? "bits" : textModeSel.value;
   const textLayout = textLayoutSel.value;
 
@@ -379,13 +416,30 @@ async function recomputeAll() {
 
 function runOpticsAndRender() {
   if (!state.features) return;
-  const params = getOpticsParams();
+  const isPlay = state.viewMode === "play";
+  const params = isPlay ? PLAY_OPTICS : getOpticsParams();
   const res = simulateOptics(state.features, params);
   state.res = res;
 
   const h = res.height, w = res.width;
-  const apertureU8 = buildApertureRgbU8(res.aperture_2d, h, w, params.showPhi);
   const lfU8 = buildLightRgbU8(res, params.wavelengthNm);
+
+  if (isPlay) {
+    paintRgbaBuffer(el("play-light-canvas"), lfU8, w, h);
+    const regime = res.simple.regime;
+    if (regime === "Uniform / Blank") {
+      playLiveCaption.textContent = "Calm solid beam — every character is identical, so nothing bends the light.";
+    } else if (regime === "Ordered / Repetitive") {
+      playLiveCaption.textContent = "Locked rhythm — repeating structure splits the beam into crisp bands.";
+    } else if (regime === "Chaotic / Static") {
+      playLiveCaption.textContent = "Scattered static — unpredictable characters shatter the beam into speckle.";
+    } else {
+      playLiveCaption.textContent = "Flowing structure — mixed repetition and variation bend light into glowing arcs.";
+    }
+    return;
+  }
+
+  const apertureU8 = buildApertureRgbU8(res.aperture_2d, h, w, params.showPhi);
   state.currentImages = { apertureU8, lfU8, h, w };
 
   const baseline = getSelectedBaseline();
@@ -555,7 +609,7 @@ function refreshSnapshotControls() {
   compareSel.classList.toggle("hidden", !has);
   clearSnapsBtn.classList.toggle("hidden", !has);
   compareTip.classList.toggle("hidden", has);
-  el("snapshots-section").classList.toggle("hidden", !has);
+  el("snapshots-section").classList.toggle("hidden", state.viewMode === "play" || !has);
 
   const prevVal = compareSel.value;
   compareSel.innerHTML = `<option value="">None (no comparison)</option>`;
@@ -641,9 +695,8 @@ document.querySelectorAll("#view-mode-tabs .seg-btn").forEach((btn) => {
     document.querySelectorAll("#view-mode-tabs .seg-btn").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     state.viewMode = btn.dataset.view;
-    el("simple-view").classList.toggle("hidden", state.viewMode !== "simple");
-    el("bench-view").classList.toggle("hidden", state.viewMode !== "bench");
-    runOpticsAndRender();
+    updateViewVisibility();
+    recomputeAll();
   });
 });
 
@@ -662,14 +715,25 @@ document.querySelectorAll("[data-preset]").forEach((btn) => {
     textFileInput.value = "";
     textFileInfo.classList.add("hidden");
     textInput.value = TEXT_PRESETS[btn.dataset.preset];
+    playTextInput.value = textInput.value;
     recomputeAll();
   });
 });
 
 let textDebounce;
+playTextInput.addEventListener("input", () => {
+  state.uploadedText = null;
+  textFileInput.value = "";
+  textFileInfo.classList.add("hidden");
+  textInput.value = playTextInput.value;
+  clearTimeout(textDebounce);
+  textDebounce = setTimeout(recomputeAll, 140);
+});
+
 textInput.addEventListener("input", () => {
   state.uploadedText = null;
   textFileInfo.classList.add("hidden");
+  playTextInput.value = textInput.value;
   clearTimeout(textDebounce);
   textDebounce = setTimeout(recomputeAll, 140);
 });
@@ -802,4 +866,5 @@ el("download-csv-btn").addEventListener("click", () => {
 });
 
 // --- BOOT ---
+updateViewVisibility();
 recomputeAll();
