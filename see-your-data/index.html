@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>See Your Data - Digital Optics & Structure Bench</title>
-  <link rel="stylesheet" href="./style.css?v=3" />
+  <link rel="stylesheet" href="./style.css?v=4" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app-shell play-mode">
     <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-section">
@@ -130,11 +130,12 @@
       <!-- VIEW SWITCHER + SNAPSHOT BAR -->
       <div class="toolbar">
         <div class="segmented" id="view-mode-tabs">
-          <button type="button" class="seg-btn active" data-view="simple">Simple View</button>
+          <button type="button" class="seg-btn active" data-view="play">Quick Play</button>
+          <button type="button" class="seg-btn" data-view="simple">Simple View</button>
           <button type="button" class="seg-btn" data-view="bench">Optical Bench (Detailed)</button>
         </div>
 
-        <div class="snapshot-bar">
+        <div class="snapshot-bar hidden">
           <button type="button" id="pin-snapshot-btn" class="btn-primary">📌 Pin Snapshot</button>
           <select id="compare-select" class="hidden">
             <option value="">None (no comparison)</option>
@@ -148,8 +149,27 @@
         </div>
       </div>
 
+      <!-- QUICK PLAY VIEW -->
+      <section id="play-view">
+        <div class="play-stage">
+          <div class="visual-card play-box-card">
+            <canvas id="play-light-canvas"></canvas>
+            <p id="play-live-caption" class="play-live-caption"></p>
+          </div>
+
+          <div class="play-input-card">
+            <label class="field-label" for="play-text-input">Type anything to bend the light</label>
+            <textarea id="play-text-input" rows="3" placeholder="Try identical letters (aaaa), alternating rhythms (abababab), mirrored text (123454321), or random keys..."></textarea>
+            <p class="play-explainer">
+              Your words act like a sculpted piece of glass in front of a white-light beam. Smooth or identical text leaves a calm, solid glow or curved rings; crisp repetition locks light into sharp crossing bands; random noise shatters it into static.
+              <span class="play-caveat">Note: this view is locked to one fixed lens setup (a 1D phase grating in white light) and doesn't show all the physics at play—switch to <strong>Simple View</strong> or <strong>Optical Bench</strong> to explore the full controls, 2D grids, and measurements.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
       <!-- SIMPLE VIEW -->
-      <section id="simple-view">
+      <section id="simple-view" class="hidden">
         <div class="regime-banner">
           <span id="regime-pill" class="regime-pill">Signal Regime: —</span>
           <span id="regime-meta" class="hint-text">Information Density: —</span>
@@ -225,76 +245,78 @@
 
       <!-- OPTICAL BENCH VIEW -->
       <section id="bench-view" class="hidden">
-        <div class="bench-metrics-grid">
-          <div class="metric-card compact">
-            <div id="b-slope-label" class="metric-label">Fourier Power Slope (β)</div>
-            <div class="metric-value-row">
-              <span id="b-slope" class="metric-value small">—</span>
-              <span id="bd-slope" class="metric-delta"></span>
+        <div class="bench-metrics-group">
+          <div class="bench-metrics-grid">
+            <div class="metric-card compact">
+              <div id="b-slope-label" class="metric-label">Fourier Power Slope (β)</div>
+              <div class="metric-value-row">
+                <span id="b-slope" class="metric-value small">—</span>
+                <span id="bd-slope" class="metric-delta"></span>
+              </div>
+            </div>
+            <div class="metric-card compact">
+              <div class="metric-label">Input Fractal Dim</div>
+              <div class="metric-value-row">
+                <span id="b-fd" class="metric-value small">—</span>
+                <span id="bd-fd" class="metric-delta"></span>
+              </div>
+            </div>
+            <div class="metric-card compact">
+              <div class="metric-label">Light Caustic Dim</div>
+              <div class="metric-value-row">
+                <span id="b-lfd" class="metric-value small">—</span>
+                <span id="bd-lfd" class="metric-delta"></span>
+              </div>
+            </div>
+            <div class="metric-card compact">
+              <div id="b-phi-label" class="metric-label">φ Match</div>
+              <div class="metric-value-row">
+                <span id="b-phi" class="metric-value small">—</span>
+              </div>
+            </div>
+            <div class="metric-card compact">
+              <div class="metric-label">Spectral Entropy</div>
+              <div class="metric-value-row">
+                <span id="b-spec-ent" class="metric-value small">—</span>
+                <span id="bd-spec-ent" class="metric-delta"></span>
+              </div>
+            </div>
+            <div class="metric-card compact">
+              <div class="metric-label">CIE Spectral Color</div>
+              <div class="swatch-row">
+                <div id="bench-swatch" class="swatch-box small"></div>
+                <span id="bench-hex" class="mono small-txt">#000000</span>
+              </div>
             </div>
           </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Input Fractal Dim</div>
-            <div class="metric-value-row">
-              <span id="b-fd" class="metric-value small">—</span>
-              <span id="bd-fd" class="metric-delta"></span>
-            </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Light Caustic Dim</div>
-            <div class="metric-value-row">
-              <span id="b-lfd" class="metric-value small">—</span>
-              <span id="bd-lfd" class="metric-delta"></span>
-            </div>
-          </div>
-          <div class="metric-card compact">
-            <div id="b-phi-label" class="metric-label">φ Match</div>
-            <div class="metric-value-row">
-              <span id="b-phi" class="metric-value small">—</span>
-            </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Spectral Entropy</div>
-            <div class="metric-value-row">
-              <span id="b-spec-ent" class="metric-value small">—</span>
-              <span id="bd-spec-ent" class="metric-delta"></span>
-            </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">CIE Spectral Color</div>
-            <div class="swatch-row">
-              <div id="bench-swatch" class="swatch-box small"></div>
-              <span id="bench-hex" class="mono small-txt">#000000</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="bench-metrics-grid four-col">
-          <div class="metric-card compact">
-            <div class="metric-label">Shannon Entropy (bits)</div>
-            <div class="metric-value-row">
-              <span id="b-shannon" class="metric-value small">—</span>
-              <span id="bd-shannon" class="metric-delta"></span>
+          <div class="bench-metrics-grid four-col">
+            <div class="metric-card compact">
+              <div class="metric-label">Shannon Entropy (bits)</div>
+              <div class="metric-value-row">
+                <span id="b-shannon" class="metric-value small">—</span>
+                <span id="bd-shannon" class="metric-delta"></span>
+              </div>
             </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Compressibility (deflate)</div>
-            <div class="metric-value-row">
-              <span id="b-compress" class="metric-value small">—</span>
-              <span id="bd-compress" class="metric-delta"></span>
+            <div class="metric-card compact">
+              <div class="metric-label">Compressibility (deflate)</div>
+              <div class="metric-value-row">
+                <span id="b-compress" class="metric-value small">—</span>
+                <span id="bd-compress" class="metric-delta"></span>
+              </div>
             </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Scintillation Index (σ²)</div>
-            <div class="metric-value-row">
-              <span id="b-scint" class="metric-value small">—</span>
-              <span id="bd-scint" class="metric-delta"></span>
+            <div class="metric-card compact">
+              <div class="metric-label">Scintillation Index (σ²)</div>
+              <div class="metric-value-row">
+                <span id="b-scint" class="metric-value small">—</span>
+                <span id="bd-scint" class="metric-delta"></span>
+              </div>
             </div>
-          </div>
-          <div class="metric-card compact">
-            <div class="metric-label">Signal Regime</div>
-            <div class="metric-value-row">
-              <span id="b-regime" class="metric-value small">—</span>
+            <div class="metric-card compact">
+              <div class="metric-label">Signal Regime</div>
+              <div class="metric-value-row">
+                <span id="b-regime" class="metric-value small">—</span>
+              </div>
             </div>
           </div>
         </div>
@@ -315,88 +337,90 @@
           </ul>
         </details>
 
-        <hr />
+        <div class="bench-visuals-group">
+          <hr class="bench-divider" />
 
-        <div class="hero-grid">
-          <div class="visual-card">
-            <h3>1. Input Optical Filter</h3>
-            <canvas id="bench-aperture-canvas"></canvas>
-            <p id="bench-left-cap" class="caption"></p>
+          <div class="hero-grid">
+            <div class="visual-card">
+              <h3>1. Input Optical Filter</h3>
+              <canvas id="bench-aperture-canvas"></canvas>
+              <p id="bench-left-cap" class="caption"></p>
+            </div>
+            <div class="visual-card">
+              <h3 id="bench-right-title">2. Diffraction Field</h3>
+              <canvas id="bench-light-canvas"></canvas>
+              <p id="bench-right-cap" class="caption"></p>
+            </div>
           </div>
-          <div class="visual-card">
-            <h3 id="bench-right-title">2. Diffraction Field</h3>
-            <canvas id="bench-light-canvas"></canvas>
-            <p id="bench-right-cap" class="caption"></p>
-          </div>
-        </div>
 
-        <div id="bench-compare-row" class="hero-grid compare-row hidden">
-          <div class="visual-card">
-            <canvas id="bench-base-aperture-canvas"></canvas>
-            <p id="bench-base-left-cap" class="caption"></p>
+          <div id="bench-compare-row" class="hero-grid compare-row hidden">
+            <div class="visual-card">
+              <canvas id="bench-base-aperture-canvas"></canvas>
+              <p id="bench-base-left-cap" class="caption"></p>
+            </div>
+            <div class="visual-card">
+              <canvas id="bench-base-light-canvas"></canvas>
+              <p id="bench-base-right-cap" class="caption"></p>
+            </div>
           </div>
-          <div class="visual-card">
-            <canvas id="bench-base-light-canvas"></canvas>
-            <p id="bench-base-right-cap" class="caption"></p>
-          </div>
-        </div>
 
-        <hr />
+          <hr class="bench-divider" />
 
-        <!-- TEXT CHARTS -->
-        <div id="bench-text-plots" class="hero-grid">
-          <div class="visual-card">
-            <div class="card-header-row">
-              <h3>1D Encoded Signal</h3>
-              <div class="card-actions">
-                <button type="button" id="copy-1d-csv" class="btn-secondary btn-xs">Copy CSV</button>
-                <button type="button" id="save-1d-png" class="btn-secondary btn-xs">Save PNG</button>
+          <!-- TEXT CHARTS -->
+          <div id="bench-text-plots" class="hero-grid">
+            <div class="visual-card">
+              <div class="card-header-row">
+                <h3>1D Encoded Signal</h3>
+                <div class="card-actions">
+                  <button type="button" id="copy-1d-csv" class="btn-secondary btn-xs">Copy CSV</button>
+                  <button type="button" id="save-1d-png" class="btn-secondary btn-xs">Save PNG</button>
+                </div>
               </div>
+              <canvas id="plot-1d-canvas" class="plot-canvas"></canvas>
+              <div class="plot-footer">
+                <span id="plot-1d-readout" class="plot-readout mono">Hover chart to inspect values</span>
+              </div>
+              <p class="caption">Your text converted into a numerical wave (downsampled for large files).</p>
             </div>
-            <canvas id="plot-1d-canvas" class="plot-canvas"></canvas>
-            <div class="plot-footer">
-              <span id="plot-1d-readout" class="plot-readout mono">Hover chart to inspect values</span>
+
+            <div class="visual-card">
+              <div class="card-header-row">
+                <h3>Log-Log Fourier Power Spectrum</h3>
+                <div class="card-actions">
+                  <button type="button" id="copy-fft-csv" class="btn-secondary btn-xs">Copy CSV</button>
+                  <button type="button" id="save-fft-png" class="btn-secondary btn-xs">Save PNG</button>
+                </div>
+              </div>
+              <canvas id="plot-fft-canvas" class="plot-canvas"></canvas>
+              <div class="plot-footer">
+                <span id="plot-fft-readout" class="plot-readout mono">Hover chart to inspect values</span>
+              </div>
+              <p class="caption">Left = slow broad waves; Right = rapid jitter. A downward diagonal slope means 1/f structure.</p>
             </div>
-            <p class="caption">Your text converted into a numerical wave (downsampled for large files).</p>
           </div>
 
-          <div class="visual-card">
-            <div class="card-header-row">
-              <h3>Log-Log Fourier Power Spectrum</h3>
-              <div class="card-actions">
-                <button type="button" id="copy-fft-csv" class="btn-secondary btn-xs">Copy CSV</button>
-                <button type="button" id="save-fft-png" class="btn-secondary btn-xs">Save PNG</button>
+          <!-- IMAGE PLOTS -->
+          <div id="bench-image-plots" class="hero-grid hidden">
+            <div class="visual-card">
+              <div class="card-header-row">
+                <h3>2D Fourier Power Spectrum</h3>
+                <div class="card-actions">
+                  <button type="button" id="save-psd2d-png" class="btn-secondary btn-xs">Save PNG</button>
+                </div>
               </div>
+              <canvas id="plot-psd2d-canvas"></canvas>
+              <p class="caption">Center = broad shapes; Outer edges = fine textures. Crosshairs show horizontal/vertical edges.</p>
             </div>
-            <canvas id="plot-fft-canvas" class="plot-canvas"></canvas>
-            <div class="plot-footer">
-              <span id="plot-fft-readout" class="plot-readout mono">Hover chart to inspect values</span>
-            </div>
-            <p class="caption">Left = slow broad waves; Right = rapid jitter. A downward diagonal slope means 1/f structure.</p>
-          </div>
-        </div>
-
-        <!-- IMAGE PLOTS -->
-        <div id="bench-image-plots" class="hero-grid hidden">
-          <div class="visual-card">
-            <div class="card-header-row">
-              <h3>2D Fourier Power Spectrum</h3>
-              <div class="card-actions">
-                <button type="button" id="save-psd2d-png" class="btn-secondary btn-xs">Save PNG</button>
+            <div class="visual-card">
+              <div class="card-header-row">
+                <h3>Spatial, Geometry &amp; Information Details</h3>
+                <div class="card-actions">
+                  <button type="button" id="copy-json-btn" class="btn-secondary btn-xs">Copy JSON</button>
+                </div>
               </div>
+              <pre id="bench-json-details" class="json-box"></pre>
+              <p class="caption">Higher anisotropy = straight geometric edges; higher chroma = vivid colors.</p>
             </div>
-            <canvas id="plot-psd2d-canvas"></canvas>
-            <p class="caption">Center = broad shapes; Outer edges = fine textures. Crosshairs show horizontal/vertical edges.</p>
-          </div>
-          <div class="visual-card">
-            <div class="card-header-row">
-              <h3>Spatial, Geometry &amp; Information Details</h3>
-              <div class="card-actions">
-                <button type="button" id="copy-json-btn" class="btn-secondary btn-xs">Copy JSON</button>
-              </div>
-            </div>
-            <pre id="bench-json-details" class="json-box"></pre>
-            <p class="caption">Higher anisotropy = straight geometric edges; higher chroma = vivid colors.</p>
           </div>
         </div>
       </section>
@@ -436,6 +460,6 @@
     </main>
   </div>
 
-  <script type="module" src="./app.js?v=3"></script>
+  <script type="module" src="./app.js?v=4"></script>
 </body>
 </html>
