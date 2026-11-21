@@ -179,21 +179,21 @@ button {
 
 /* MAIN AREA */
 .main-content {
-  padding: 24px 30px 48px;
-  max-width: 1260px;
+  padding: 16px 24px 36px;
+  max-width: 1020px;
   width: 100%;
   margin: 0 auto;
 }
 
 .page-header h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 24px;
   letter-spacing: -0.02em;
 }
 .subtitle {
-  margin: 4px 0 18px;
+  margin: 2px 0 12px;
   color: var(--muted);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .toolbar {
@@ -201,8 +201,8 @@ button {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .snapshot-bar {
@@ -218,29 +218,29 @@ button {
 }
 
 /* QUICK PLAY VIEW */
-.play-box-card {
-  max-width: 560px;
-}
-.play-box-card canvas {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-}
 .play-live-caption {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text);
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   font-weight: 500;
 }
 .play-explainer {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
   margin: 4px 0 0;
-  line-height: 1.5;
+  line-height: 1.48;
+}
+.play-explainer code {
+  color: var(--text);
+  background: var(--surface-2);
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 11px;
 }
 .play-caveat {
   display: block;
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 11.5px;
   color: #cbd5e1;
 }
 
@@ -248,14 +248,14 @@ button {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 .regime-pill {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #fff;
   background: #475569;
@@ -265,57 +265,60 @@ button {
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 14px;
 }
 .compare-row {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .visual-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
+  padding: 11px 12px;
 }
 .visual-card h3 {
-  margin: 0 0 10px 0;
-  font-size: 16px;
+  margin: 0 0 8px 0;
+  font-size: 14px;
 }
 .visual-card canvas {
   width: 100%;
+  max-width: 300px;
   height: auto;
   display: block;
+  margin: 0 auto;
   border-radius: 6px;
   background: #000;
 }
 .visual-card canvas.plot-canvas {
-  aspect-ratio: 16 / 9;
+  max-width: none;
+  aspect-ratio: 16 / 8;
   background: #0b0d13;
 }
 
 .caption, .hint-text {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--muted);
-  margin: 8px 0 0;
+  margin: 6px 0 0;
 }
 
 hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 20px 0;
+  margin: 14px 0;
 }
 
 /* METRICS */
 .simple-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 10px;
 }
 .bench-metrics-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 .bench-metrics-grid.four-col {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -325,15 +328,15 @@ hr {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 14px;
-}
-.metric-card.compact {
   padding: 10px 12px;
 }
+.metric-card.compact {
+  padding: 8px 10px;
+}
 .metric-label {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--muted);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .metric-value-row {
   display: flex;
@@ -341,14 +344,14 @@ hr {
   gap: 8px;
 }
 .metric-value {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
 }
 .metric-value.small {
-  font-size: 19px;
+  font-size: 17px;
 }
 .metric-delta {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
 }
 .metric-delta.pos { color: var(--green); }
@@ -357,11 +360,11 @@ hr {
 
 .progress-track {
   width: 100%;
-  height: 7px;
+  height: 6px;
   background: var(--surface-2);
   border-radius: 999px;
   overflow: hidden;
-  margin: 8px 0 6px;
+  margin: 6px 0 5px;
 }
 .progress-fill {
   height: 100%;
@@ -373,19 +376,19 @@ hr {
 .swatch-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 6px;
+  gap: 8px;
+  margin-top: 4px;
 }
 .swatch-box {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
   border: 1px solid #555;
   flex-shrink: 0;
 }
 .swatch-box.small {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 6px;
 }
 
@@ -398,30 +401,31 @@ hr {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 10px 14px;
-  margin-top: 12px;
-  font-size: 13px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 12.5px;
 }
 .field-guide summary {
   cursor: pointer;
   font-weight: 600;
 }
 .field-guide ul {
-  margin: 8px 0 0;
+  margin: 6px 0 0;
   padding-left: 18px;
   color: var(--muted);
 }
-.field-guide li { margin-bottom: 4px; }
+.field-guide li { margin-bottom: 3px; }
 
 .json-box {
   background: #0b0d13;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 12px;
-  font-size: 12px;
+  padding: 10px;
+  font-size: 11.5px;
   overflow-x: auto;
   margin: 0;
-  min-height: 220px;
+  min-height: 180px;
+  max-height: 260px;
 }
 
 /* SNAPSHOT TABLE */
@@ -429,9 +433,9 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-.snapshots-header h3 { margin: 0; font-size: 16px; }
+.snapshots-header h3 { margin: 0; font-size: 15px; }
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);
@@ -443,7 +447,7 @@ table {
   font-size: 12px;
 }
 th, td {
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-bottom: 1px solid var(--border);
   text-align: left;
   white-space: nowrap;
@@ -462,7 +466,7 @@ tr:last-child td { border-bottom: none; }
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .card-header-row h3 {
   margin: 0;
@@ -476,8 +480,8 @@ tr:last-child td { border-bottom: none; }
   font-size: 11px;
 }
 .plot-footer {
-  margin-top: 6px;
-  min-height: 18px;
+  margin-top: 5px;
+  min-height: 16px;
 }
 .plot-readout {
   font-size: 11px;
@@ -493,9 +497,11 @@ tr:last-child td { border-bottom: none; }
 @media (max-width: 980px) {
   .app-shell {
     grid-template-columns: minmax(136px, 42%) minmax(0, 1fr);
-    gap: 10px;
-    padding: 10px 10px 28px;
+    min-height: 0;
+    align-content: start;
     align-items: start;
+    gap: 8px 10px;
+    padding: 10px 10px 28px;
   }
 
   .main-content {
@@ -524,13 +530,13 @@ tr:last-child td { border-bottom: none; }
   .page-header {
     grid-column: 1 / -1;
     grid-row: 1;
-    padding: 2px 2px 0;
+    padding: 0 2px;
   }
   .page-header h1 {
-    font-size: 22px;
+    font-size: 21px;
   }
   .subtitle {
-    margin: 2px 0 6px;
+    margin: 2px 0 0;
     font-size: 12px;
   }
 
@@ -540,7 +546,6 @@ tr:last-child td { border-bottom: none; }
     justify-self: start;
     max-width: 100%;
     overflow-x: auto;
-    margin-bottom: 2px;
   }
   .segmented .seg-btn {
     padding: 5px 9px;
@@ -603,7 +608,7 @@ tr:last-child td { border-bottom: none; }
   }
   .play-explainer {
     font-size: 11px;
-    margin-top: 6px;
+    margin-top: 4px;
   }
   .play-caveat {
     font-size: 10.5px;
@@ -611,7 +616,7 @@ tr:last-child td { border-bottom: none; }
   }
   .play-live-caption {
     font-size: 11px;
-    margin-top: 6px;
+    margin-top: 5px;
   }
 
   /* 3. Middle Right: Shrunken Output Views */
@@ -630,12 +635,11 @@ tr:last-child td { border-bottom: none; }
     grid-row: 3;
     align-self: start;
   }
-  /* Spread Optical Bench metrics across the full bottom width */
   .bench-metrics-group {
     grid-column: 1 / -1;
     grid-row: 4;
     align-self: start;
-    margin-top: 4px;
+    margin-top: 2px;
   }
   .bench-divider {
     display: none;
@@ -668,6 +672,9 @@ tr:last-child td { border-bottom: none; }
   .visual-card h3 {
     font-size: 12px;
     margin-bottom: 6px;
+  }
+  .visual-card canvas {
+    max-width: none;
   }
   .caption, .hint-text {
     font-size: 11px;
