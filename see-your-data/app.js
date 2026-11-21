@@ -5,7 +5,7 @@ import {
   wavelengthToRgb,
   makeSampleImage,
   loadImageBlob,
-} from "./engine.js?v=5";
+} from "./engine.js?v=6";
 
 // --- PRESETS ---
 function makeRandomStatic(len = 180) {
@@ -36,10 +36,10 @@ const TEXT_PRESETS = {
 };
 
 const PLAY_OPTICS = {
-  opticsMode: "phase",
+  opticsMode: "amplitude",
   whiteLight: true,
   wavelengthNm: 532.0,
-  distanceMm: 35.0,
+  distanceMm: 25.0,
   showPhi: false,
 };
 
@@ -384,17 +384,19 @@ async function recomputeAll() {
   if (state.viewMode === "play") {
     const txt = playTextInput.value;
     if (!txt || !txt.trim()) {
-      const c = el("play-light-canvas");
-      c.width = 256; c.height = 256;
-      c.getContext("2d").fillRect(0, 0, 256, 256);
-      playLiveCaption.textContent = "Type anything below to shine white light through your words.";
+      for (const id of ["play-aperture-canvas", "play-light-canvas"]) {
+        const c = el(id);
+        c.width = 256; c.height = 256;
+        c.getContext("2d").fillRect(0, 0, 256, 256);
+      }
+      playLiveCaption.textContent = "Type anything on the left to build a binary aperture and diffract white light.";
       return;
     }
-    state.features = await extractInputFeatures({ text: txt, textMode: "utf8", textLayout: "crossed" });
+    state.features = await extractInputFeatures({ text: txt, textMode: "bits", textLayout: "matrix" });
     runOpticsAndRender();
     return;
   }
-
+  
   const textMode = hiddenBinaryChk.checked ? "bits" : textModeSel.value;
   const textLayout = textLayoutSel.value;
 
@@ -424,24 +426,29 @@ function runOpticsAndRender() {
   state.res = res;
 
   const h = res.height, w = res.width;
+  const apertureU8 = buildApertureRgbU8(res.aperture_2d, h, w, params.showPhi);
   const lfU8 = buildLightRgbU8(res, params.wavelengthNm);
 
   if (isPlay) {
+    paintRgbaBuffer(el("play-aperture-canvas"), apertureU8, w, h);
     paintRgbaBuffer(el("play-light-canvas"), lfU8, w, h);
+
+    const bits = res.signal_1d.length;
+    const gridDesc = bits >= 64
+      ? `${bits.toLocaleString()} bits in a ${Math.ceil(Math.sqrt(bits))}×${Math.ceil(Math.sqrt(bits))} grid`
+      : `${bits} bits in 1D vertical bars (type 8+ chars for a 2D grid)`;
     const regime = res.simple.regime;
-    if (regime === "Uniform / Blank") {
-      playLiveCaption.textContent = "Calm solid beam — every character is identical, so nothing bends the light.";
-    } else if (regime === "Ordered / Repetitive") {
-      playLiveCaption.textContent = "Locked rhythm — repeating structure splits the beam into crisp bands.";
+
+    if (regime === "Ordered / Repetitive") {
+      playLiveCaption.textContent = `${gridDesc} — repeating bit intervals interfere constructively into sharp, regular fringes.`;
     } else if (regime === "Chaotic / Static") {
-      playLiveCaption.textContent = "Scattered static — unpredictable characters shatter the beam into speckle.";
+      playLiveCaption.textContent = `${gridDesc} — high randomness scatters light across all angles into fine speckle.`;
     } else {
-      playLiveCaption.textContent = "Flowing structure — mixed repetition and variation bend light into glowing arcs.";
+      playLiveCaption.textContent = `${gridDesc} — mixed structure and variation bend light into multi-scale interference arcs.`;
     }
     return;
   }
-
-  const apertureU8 = buildApertureRgbU8(res.aperture_2d, h, w, params.showPhi);
+  
   state.currentImages = { apertureU8, lfU8, h, w };
 
   const baseline = getSelectedBaseline();
