@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>See Your Data - Digital Optics & Structure Bench</title>
-  <link rel="stylesheet" href="./style.css?v=5" />
+  <link rel="stylesheet" href="./style.css?v=6" />
 </head>
 <body>
   <div class="app-shell play-mode">
@@ -12,11 +12,11 @@
     <aside class="sidebar">
       <div id="sidebar-play-controls" class="sidebar-section">
         <h2>Quick Play</h2>
-        <label class="field-label" for="play-text-input">Type anything to bend the light</label>
-        <textarea id="play-text-input" rows="5" placeholder="Try identical letters (aaaa), alternating beats (abababab), mirrored text (12345654321), or random keys..."></textarea>
+        <label class="field-label" for="play-text-input">Type anything to build a 2D bit mask</label>
+        <textarea id="play-text-input" rows="5" placeholder="Try repeating letters (abababab), uniform letters (aaaaaaaa), code, or random keys..."></textarea>
         <p class="play-explainer">
-          Your words act like sculpted glass in front of a white-light beam. Identical letters leave a calm solid glow; mirrored waves bend into circular rings; sharp repetition locks into a glowing cross; random noise shatters into static.
-          <span class="play-caveat">Note: this view is locked to one fixed setup (a crossed 2D phase mask in white light) and doesn't show all the physics at play—switch to <strong>Simple View</strong> or <strong>Optical Bench</strong> to explore the full controls and measurements.</span>
+          <strong>How it works:</strong> Each character is unpacked into 8 binary bits (<code>0</code>s and <code>1</code>s) and wrapped into a 2D grid (once you type 8+ characters). <code>0</code> blocks light and <code>1</code> lets it pass, forming the aperture on the left. Virtual white light shines through that mask and travels 25 mm: repeating bits interfere into sharp grids or bars, while irregular bits scatter light broadly, and Red/Green/Blue wavelengths bend at different angles to create color fringes.
+          <span class="play-caveat">Note: this view is locked to binary bits in a 2D amplitude matrix. Switch to <strong>Simple View</strong> or <strong>Optical Bench</strong> to test UTF-8 byte values, phase-bending mode, laser wavelength, distance <code>z</code>, and full metrics.</span>
         </p>
       </div>
 
@@ -163,10 +163,17 @@
 
       <!-- QUICK PLAY VIEW -->
       <section id="play-view">
-        <div class="visual-card play-box-card">
-          <h3>Data-Filtered Light</h3>
-          <canvas id="play-light-canvas"></canvas>
-          <p id="play-live-caption" class="play-live-caption"></p>
+        <div class="hero-grid">
+          <div class="visual-card">
+            <h3>1. Input Bit Mask (0 = Block, 1 = Pass)</h3>
+            <canvas id="play-aperture-canvas"></canvas>
+            <p class="caption">Your text unpacked into binary bits and wrapped into a 2D aperture inside a circular beam.</p>
+          </div>
+          <div class="visual-card">
+            <h3>2. Diffracted White Light (z = 25 mm)</h3>
+            <canvas id="play-light-canvas"></canvas>
+            <p id="play-live-caption" class="play-live-caption"></p>
+          </div>
         </div>
       </section>
 
@@ -462,6 +469,6 @@
     </main>
   </div>
 
-  <script type="module" src="./app.js?v=5"></script>
+  <script type="module" src="./app.js?v=6"></script>
 </body>
 </html>
