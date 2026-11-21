@@ -5,7 +5,7 @@ import {
   wavelengthToRgb,
   makeSampleImage,
   loadImageBlob,
-} from "./engine.js?v=3";
+} from "./engine.js?v=4";
 
 // --- PRESETS ---
 function makeRandomStatic(len = 180) {
