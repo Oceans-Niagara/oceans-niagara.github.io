@@ -226,11 +226,22 @@ button {
 
 /* QUICK PLAY VIEW */
 .play-stage {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.play-input-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.play-input-card .field-label {
+  margin-top: 0;
+}
+.play-box-card {
   max-width: 560px;
-  margin: 8px auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
 }
 .play-box-card canvas {
   width: 100%;
@@ -241,15 +252,6 @@ button {
   color: var(--text);
   margin: 10px 0 0;
   font-weight: 500;
-}
-.play-input-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-}
-.play-input-card .field-label {
-  margin-top: 0;
 }
 .play-explainer {
   font-size: 13px;
@@ -519,7 +521,7 @@ tr:last-child td { border-bottom: none; }
   }
 
   .app-shell.play-mode {
-    padding: 12px 12px 28px;
+    padding: 10px 10px 28px;
   }
   .app-shell.play-mode .main-content {
     display: block;
@@ -527,7 +529,32 @@ tr:last-child td { border-bottom: none; }
   }
   .app-shell.play-mode .toolbar {
     display: flex;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+  }
+
+  .play-stage {
+    grid-template-columns: minmax(136px, 42%) minmax(0, 1fr);
+    gap: 10px;
+  }
+  .play-input-card {
+    padding: 10px;
+  }
+  .play-input-card textarea {
+    font-size: 16px;
+    padding: 5px 6px;
+    min-height: 82px;
+  }
+  .play-explainer {
+    font-size: 11px;
+    margin-top: 8px;
+  }
+  .play-caveat {
+    font-size: 10.5px;
+    margin-top: 6px;
+  }
+  .play-live-caption {
+    font-size: 11px;
+    margin-top: 6px;
   }
 
   .app-shell:not(.play-mode) .main-content {
@@ -547,7 +574,8 @@ tr:last-child td { border-bottom: none; }
   .field-guide,
   .snapshot-bar,
   #snapshots-section,
-  .visual-card {
+  .visual-card,
+  .play-input-card {
     min-width: 0;
   }
 
@@ -581,7 +609,7 @@ tr:last-child td { border-bottom: none; }
   /* 2. Middle Left: Shrunken Input Sidebar */
   .app-shell:not(.play-mode) .sidebar {
     grid-column: 1;
-    grid-row: 3 / span 2;
+    grid-row: 3;
     position: static;
     height: auto;
     overflow-y: visible;
@@ -636,7 +664,7 @@ tr:last-child td { border-bottom: none; }
   /* 3. Middle Right: Shrunken Output Views */
   .app-shell:not(.play-mode) #simple-view {
     grid-column: 2;
-    grid-row: 3 / span 2;
+    grid-row: 3;
     align-self: start;
   }
 
@@ -648,17 +676,18 @@ tr:last-child td { border-bottom: none; }
     grid-row: 3;
     align-self: start;
   }
+  /* Spread Optical Bench metrics across the full bottom width */
   .app-shell:not(.play-mode) .bench-metrics-group {
-    grid-column: 2;
+    grid-column: 1 / -1;
     grid-row: 4;
     align-self: start;
-    margin-top: 8px;
+    margin-top: 4px;
   }
   .bench-divider {
     display: none;
   }
 
-  /* Shrunken visuals & cards inside right column */
+  /* Shrunken visuals & cards */
   .regime-banner {
     gap: 6px;
     margin-bottom: 8px;
@@ -704,17 +733,17 @@ tr:last-child td { border-bottom: none; }
     padding: 8px 9px;
   }
   .metric-card.compact {
-    padding: 6px 7px;
+    padding: 7px 9px;
   }
   .metric-label {
-    font-size: 10px;
+    font-size: 10.5px;
     line-height: 1.25;
   }
   .metric-value {
     font-size: 16px;
   }
   .metric-value.small {
-    font-size: 14px;
+    font-size: 15px;
   }
   .swatch-box {
     width: 28px;
@@ -728,11 +757,11 @@ tr:last-child td { border-bottom: none; }
     margin: 10px 0;
   }
 
-  /* 4. Below Both Columns: Field Guide (Bench View) */
+  /* 4. Below Metrics: Field Guide (Bench View) */
   .app-shell:not(.play-mode) .field-guide {
     grid-column: 1 / -1;
     grid-row: 5;
-    margin-top: 4px;
+    margin-top: 2px;
     font-size: 12px;
   }
 
@@ -741,7 +770,7 @@ tr:last-child td { border-bottom: none; }
     grid-column: 1 / -1;
     grid-row: 6;
     width: 100%;
-    padding-top: 4px;
+    padding-top: 8px;
     border-top: 1px solid var(--border);
   }
   .snapshot-bar select {
