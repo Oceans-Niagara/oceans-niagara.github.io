@@ -4,119 +4,131 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>See Your Data - Digital Optics & Structure Bench</title>
-  <link rel="stylesheet" href="./style.css?v=4" />
+  <link rel="stylesheet" href="./style.css?v=5" />
 </head>
 <body>
   <div class="app-shell play-mode">
     <!-- SIDEBAR -->
     <aside class="sidebar">
-      <div class="sidebar-section">
-        <h2>Input Data</h2>
-        <div class="segmented" id="source-type-tabs">
-          <button type="button" class="seg-btn active" data-source="text">Text / Code</button>
-          <button type="button" class="seg-btn" data-source="image">Image</button>
-        </div>
-
-        <!-- TEXT CONTROLS -->
-        <div id="text-controls">
-          <div class="label-row"><span>Quick Presets</span></div>
-          <div class="preset-grid">
-            <button type="button" class="btn-secondary" data-preset="prose">Prose</button>
-            <button type="button" class="btn-secondary" data-preset="repetition">Repetition</button>
-            <button type="button" class="btn-secondary" data-preset="code">Python Code</button>
-            <button type="button" class="btn-secondary" data-preset="random">Random Static</button>
-          </div>
-
-          <label class="field-label" for="text-file-input">Upload text/code file</label>
-          <input type="file" id="text-file-input" accept=".txt,.py,.js,.ts,.md,.json,.csv,.html" />
-          <div id="text-file-info" class="hint-text hidden"></div>
-
-          <label class="field-label" for="text-input">Or enter text / code</label>
-          <textarea id="text-input" rows="4"></textarea>
-
-          <label class="checkbox-row" title="Unpacks every character into raw 1s and 0s—revealing hidden binary waves even in repeated letters like 'aaaa'.">
-            <input type="checkbox" id="hidden-binary" />
-            <span>Hidden Binary (Bit-Level)</span>
-          </label>
-
-          <div class="two-col-fields">
-            <div>
-              <label class="field-label" for="text-mode">1D Encoding</label>
-              <select id="text-mode">
-                <option value="utf8">utf8</option>
-                <option value="auto">auto</option>
-                <option value="bits">bits</option>
-                <option value="word_lengths">word_lengths</option>
-              </select>
-            </div>
-            <div>
-              <label class="field-label" for="text-layout">2D Mask</label>
-              <select id="text-layout">
-                <option value="grating">grating</option>
-                <option value="matrix">matrix</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- IMAGE CONTROLS -->
-        <div id="image-controls" class="hidden">
-          <label class="field-label" for="image-sample-select">Image Source</label>
-          <select id="image-sample-select">
-            <option value="cloud">Sample: Organic 1/f Cloud</option>
-            <option value="ripples">Sample: Concentric Ripples</option>
-            <option value="grid">Sample: Geometric Grid</option>
-            <option value="noise">Sample: White Noise</option>
-            <option value="upload">Upload your own...</option>
-          </select>
-
-          <div id="image-upload-wrap" class="hidden">
-            <label class="field-label" for="image-file-input">Upload PNG / JPEG / WebP</label>
-            <input type="file" id="image-file-input" accept="image/*" />
-          </div>
-        </div>
+      <div id="sidebar-play-controls" class="sidebar-section">
+        <h2>Quick Play</h2>
+        <label class="field-label" for="play-text-input">Type anything to bend the light</label>
+        <textarea id="play-text-input" rows="5" placeholder="Try identical letters (aaaa), alternating beats (abababab), mirrored text (12345654321), or random keys..."></textarea>
+        <p class="play-explainer">
+          Your words act like sculpted glass in front of a white-light beam. Identical letters leave a calm solid glow; mirrored waves bend into circular rings; sharp repetition locks into a glowing cross; random noise shatters into static.
+          <span class="play-caveat">Note: this view is locked to one fixed setup (a crossed 2D phase mask in white light) and doesn't show all the physics at play—switch to <strong>Simple View</strong> or <strong>Optical Bench</strong> to explore the full controls and measurements.</span>
+        </p>
       </div>
 
-      <hr />
-
-      <div class="sidebar-section">
-        <h2>Light Settings</h2>
-        <div class="radio-stack">
-          <label class="radio-row" title="Bends light like varying glass thickness (bright caustics).">
-            <input type="radio" name="optics-mode" value="phase" checked />
-            <span>Phase Filter (Bends Light)</span>
-          </label>
-          <label class="radio-row" title="Blocks light like a dark film slide.">
-            <input type="radio" name="optics-mode" value="amplitude" />
-            <span>Amplitude Filter (Blocks Light)</span>
-          </label>
-        </div>
-
-        <label class="checkbox-row" title="Shines Red, Green, and Blue light together so frequencies split into rainbow fringes.">
-          <input type="checkbox" id="white-light" />
-          <span>Polychromatic White Light (RGB)</span>
-        </label>
-
-        <div id="wavelength-wrap">
-          <div class="slider-header">
-            <label for="wavelength-slider">Laser Wavelength</label>
-            <span id="wavelength-val" class="mono">532 nm</span>
+      <div id="sidebar-full-controls" class="hidden">
+        <div class="sidebar-section">
+          <h2>Input Data</h2>
+          <div class="segmented" id="source-type-tabs">
+            <button type="button" class="seg-btn active" data-source="text">Text / Code</button>
+            <button type="button" class="seg-btn" data-source="image">Image</button>
           </div>
-          <input type="range" id="wavelength-slider" min="380" max="750" step="2" value="532" />
-        </div>
 
-        <div class="slider-wrap">
-          <div class="slider-header">
-            <label for="distance-slider">Propagation Distance z</label>
-            <span id="distance-val" class="mono">25 mm</span>
+          <!-- TEXT CONTROLS -->
+          <div id="text-controls">
+            <div class="label-row"><span>Quick Presets</span></div>
+            <div class="preset-grid">
+              <button type="button" class="btn-secondary" data-preset="prose">Prose</button>
+              <button type="button" class="btn-secondary" data-preset="repetition">Repetition</button>
+              <button type="button" class="btn-secondary" data-preset="code">Python Code</button>
+              <button type="button" class="btn-secondary" data-preset="random">Random Static</button>
+            </div>
+
+            <label class="field-label" for="text-file-input">Upload text/code file</label>
+            <input type="file" id="text-file-input" accept=".txt,.py,.js,.ts,.md,.json,.csv,.html" />
+            <div id="text-file-info" class="hint-text hidden"></div>
+
+            <label class="field-label" for="text-input">Or enter text / code</label>
+            <textarea id="text-input" rows="4"></textarea>
+
+            <label class="checkbox-row" title="Unpacks every character into raw 1s and 0s—revealing hidden binary waves even in repeated letters like 'aaaa'.">
+              <input type="checkbox" id="hidden-binary" />
+              <span>Hidden Binary (Bit-Level)</span>
+            </label>
+
+            <div class="two-col-fields">
+              <div>
+                <label class="field-label" for="text-mode">1D Encoding</label>
+                <select id="text-mode">
+                  <option value="utf8">utf8</option>
+                  <option value="auto">auto</option>
+                  <option value="bits">bits</option>
+                  <option value="word_lengths">word_lengths</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label" for="text-layout">2D Mask</label>
+                <select id="text-layout">
+                  <option value="grating">grating</option>
+                  <option value="matrix">matrix</option>
+                </select>
+              </div>
+            </div>
           </div>
-          <input type="range" id="distance-slider" min="0" max="100" step="1" value="25" />
+
+          <!-- IMAGE CONTROLS -->
+          <div id="image-controls" class="hidden">
+            <label class="field-label" for="image-sample-select">Image Source</label>
+            <select id="image-sample-select">
+              <option value="cloud">Sample: Organic 1/f Cloud</option>
+              <option value="ripples">Sample: Concentric Ripples</option>
+              <option value="grid">Sample: Geometric Grid</option>
+              <option value="noise">Sample: White Noise</option>
+              <option value="upload">Upload your own...</option>
+            </select>
+
+            <div id="image-upload-wrap" class="hidden">
+              <label class="field-label" for="image-file-input">Upload PNG / JPEG / WebP</label>
+              <input type="file" id="image-file-input" accept="image/*" />
+            </div>
+          </div>
         </div>
 
-        <label class="checkbox-row">
-          <input type="checkbox" id="show-phi" checked />
-          <span>Overlay Golden Ratio (φ) Grid</span>
-        </label>
+        <hr />
+
+        <div class="sidebar-section">
+          <h2>Light Settings</h2>
+          <div class="radio-stack">
+            <label class="radio-row" title="Bends light like varying glass thickness (bright caustics).">
+              <input type="radio" name="optics-mode" value="phase" checked />
+              <span>Phase Filter (Bends Light)</span>
+            </label>
+            <label class="radio-row" title="Blocks light like a dark film slide.">
+              <input type="radio" name="optics-mode" value="amplitude" />
+              <span>Amplitude Filter (Blocks Light)</span>
+            </label>
+          </div>
+
+          <label class="checkbox-row" title="Shines Red, Green, and Blue light together so frequencies split into rainbow fringes.">
+            <input type="checkbox" id="white-light" />
+            <span>Polychromatic White Light (RGB)</span>
+          </label>
+
+          <div id="wavelength-wrap">
+            <div class="slider-header">
+              <label for="wavelength-slider">Laser Wavelength</label>
+              <span id="wavelength-val" class="mono">532 nm</span>
+            </div>
+            <input type="range" id="wavelength-slider" min="380" max="750" step="2" value="532" />
+          </div>
+
+          <div class="slider-wrap">
+            <div class="slider-header">
+              <label for="distance-slider">Propagation Distance z</label>
+              <span id="distance-val" class="mono">25 mm</span>
+            </div>
+            <input type="range" id="distance-slider" min="0" max="100" step="1" value="25" />
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="show-phi" checked />
+            <span>Overlay Golden Ratio (φ) Grid</span>
+          </label>
+        </div>
       </div>
     </aside>
 
@@ -151,21 +163,10 @@
 
       <!-- QUICK PLAY VIEW -->
       <section id="play-view">
-        <div class="play-stage">
-          <div class="play-input-card">
-            <label class="field-label" for="play-text-input">Type anything to bend the light</label>
-            <textarea id="play-text-input" rows="5" placeholder="Try identical letters (aaaa), alternating beats (abababab), mirrored text (12345654321), or random keys..."></textarea>
-            <p class="play-explainer">
-              Your words act like sculpted glass in front of a white-light beam. Identical letters leave a calm solid glow; mirrored waves bend into circular rings; sharp repetition locks into a glowing cross; random noise shatters into static.
-              <span class="play-caveat">Note: this view is locked to one fixed setup (a crossed 2D phase mask in white light) and doesn't show all the physics at play—switch to <strong>Simple View</strong> or <strong>Optical Bench</strong> to explore the full controls and measurements.</span>
-            </p>
-          </div>
-
-          <div class="visual-card play-box-card">
-            <h3>Data-Filtered Light</h3>
-            <canvas id="play-light-canvas"></canvas>
-            <p id="play-live-caption" class="play-live-caption"></p>
-          </div>
+        <div class="visual-card play-box-card">
+          <h3>Data-Filtered Light</h3>
+          <canvas id="play-light-canvas"></canvas>
+          <p id="play-live-caption" class="play-live-caption"></p>
         </div>
       </section>
 
@@ -461,6 +462,6 @@
     </main>
   </div>
 
-  <script type="module" src="./app.js?v=4"></script>
+  <script type="module" src="./app.js?v=5"></script>
 </body>
 </html>
