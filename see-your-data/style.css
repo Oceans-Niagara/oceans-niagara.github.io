@@ -27,13 +27,6 @@ body {
   min-height: 100vh;
 }
 
-.app-shell.play-mode {
-  grid-template-columns: minmax(0, 1fr);
-}
-.app-shell.play-mode .sidebar {
-  display: none;
-}
-
 /* SIDEBAR */
 .sidebar {
   background: var(--surface);
@@ -225,21 +218,6 @@ button {
 }
 
 /* QUICK PLAY VIEW */
-.play-stage {
-  display: grid;
-  grid-template-columns: 310px minmax(0, 1fr);
-  gap: 20px;
-  align-items: start;
-}
-.play-input-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-}
-.play-input-card .field-label {
-  margin-top: 0;
-}
 .play-box-card {
   max-width: 560px;
 }
@@ -256,7 +234,7 @@ button {
 .play-explainer {
   font-size: 13px;
   color: var(--muted);
-  margin: 10px 0 0;
+  margin: 4px 0 0;
   line-height: 1.5;
 }
 .play-caveat {
@@ -513,60 +491,24 @@ tr:last-child td { border-bottom: none; }
    MOBILE LAYOUT (SPLIT INPUT / OUTPUT)
    ========================================== */
 @media (max-width: 980px) {
-  .app-shell:not(.play-mode) {
+  .app-shell {
     grid-template-columns: minmax(136px, 42%) minmax(0, 1fr);
     gap: 10px;
     padding: 10px 10px 28px;
     align-items: start;
   }
 
-  .app-shell.play-mode {
-    padding: 10px 10px 28px;
-  }
-  .app-shell.play-mode .main-content {
-    display: block;
-    padding: 0;
-  }
-  .app-shell.play-mode .toolbar {
-    display: flex;
-    margin-bottom: 10px;
-  }
-
-  .play-stage {
-    grid-template-columns: minmax(136px, 42%) minmax(0, 1fr);
-    gap: 10px;
-  }
-  .play-input-card {
-    padding: 10px;
-  }
-  .play-input-card textarea {
-    font-size: 16px;
-    padding: 5px 6px;
-    min-height: 82px;
-  }
-  .play-explainer {
-    font-size: 11px;
-    margin-top: 8px;
-  }
-  .play-caveat {
-    font-size: 10.5px;
-    margin-top: 6px;
-  }
-  .play-live-caption {
-    font-size: 11px;
-    margin-top: 6px;
-  }
-
-  .app-shell:not(.play-mode) .main-content {
+  .main-content {
     display: contents;
   }
-  .app-shell:not(.play-mode) .toolbar {
+  .toolbar {
     display: contents;
   }
 
   .page-header,
   #view-mode-tabs,
   .sidebar,
+  #play-view,
   #simple-view,
   #bench-view,
   .bench-visuals-group,
@@ -574,13 +516,12 @@ tr:last-child td { border-bottom: none; }
   .field-guide,
   .snapshot-bar,
   #snapshots-section,
-  .visual-card,
-  .play-input-card {
+  .visual-card {
     min-width: 0;
   }
 
   /* 1. Top: Title + Description, then View Tabs */
-  .app-shell:not(.play-mode) .page-header {
+  .page-header {
     grid-column: 1 / -1;
     grid-row: 1;
     padding: 2px 2px 0;
@@ -593,7 +534,7 @@ tr:last-child td { border-bottom: none; }
     font-size: 12px;
   }
 
-  .app-shell:not(.play-mode) #view-mode-tabs {
+  #view-mode-tabs {
     grid-column: 1 / -1;
     grid-row: 2;
     justify-self: start;
@@ -607,7 +548,7 @@ tr:last-child td { border-bottom: none; }
   }
 
   /* 2. Middle Left: Shrunken Input Sidebar */
-  .app-shell:not(.play-mode) .sidebar {
+  .sidebar {
     grid-column: 1;
     grid-row: 3;
     position: static;
@@ -660,24 +601,37 @@ tr:last-child td { border-bottom: none; }
   .sidebar textarea {
     min-height: 74px;
   }
+  .play-explainer {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+  .play-caveat {
+    font-size: 10.5px;
+    margin-top: 6px;
+  }
+  .play-live-caption {
+    font-size: 11px;
+    margin-top: 6px;
+  }
 
   /* 3. Middle Right: Shrunken Output Views */
-  .app-shell:not(.play-mode) #simple-view {
+  #play-view,
+  #simple-view {
     grid-column: 2;
     grid-row: 3;
     align-self: start;
   }
 
-  .app-shell:not(.play-mode) #bench-view:not(.hidden) {
+  #bench-view:not(.hidden) {
     display: contents;
   }
-  .app-shell:not(.play-mode) .bench-visuals-group {
+  .bench-visuals-group {
     grid-column: 2;
     grid-row: 3;
     align-self: start;
   }
   /* Spread Optical Bench metrics across the full bottom width */
-  .app-shell:not(.play-mode) .bench-metrics-group {
+  .bench-metrics-group {
     grid-column: 1 / -1;
     grid-row: 4;
     align-self: start;
@@ -758,7 +712,7 @@ tr:last-child td { border-bottom: none; }
   }
 
   /* 4. Below Metrics: Field Guide (Bench View) */
-  .app-shell:not(.play-mode) .field-guide {
+  .field-guide {
     grid-column: 1 / -1;
     grid-row: 5;
     margin-top: 2px;
@@ -766,7 +720,7 @@ tr:last-child td { border-bottom: none; }
   }
 
   /* 5. Bottom: Pin Bar + Snapshot Table across full width */
-  .app-shell:not(.play-mode) .snapshot-bar {
+  .snapshot-bar {
     grid-column: 1 / -1;
     grid-row: 6;
     width: 100%;
@@ -780,7 +734,7 @@ tr:last-child td { border-bottom: none; }
     font-size: 16px;
   }
 
-  .app-shell:not(.play-mode) #snapshots-section {
+  #snapshots-section {
     grid-column: 1 / -1;
     grid-row: 7;
   }
