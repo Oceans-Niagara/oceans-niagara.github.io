@@ -388,7 +388,7 @@ async function recomputeAll() {
       playLiveCaption.textContent = "Type anything below to shine white light through your words.";
       return;
     }
-    state.features = await extractInputFeatures({ text: txt, textMode: "utf8", textLayout: "grating" });
+    state.features = await extractInputFeatures({ text: txt, textMode: "utf8", textLayout: "crossed" });
     runOpticsAndRender();
     return;
   }
