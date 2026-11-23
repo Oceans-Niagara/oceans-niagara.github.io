@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="High-assurance edge synchronization and distributed control engines.">
   <title>Oceans Niagara</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -29,6 +30,35 @@
       line-height: 1.6;
       margin: 0 0 24px 0;
     }
+    .stealth-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin: 24px 0;
+      font-size: 0.95rem;
+    }
+    .link-group-label {
+      opacity: 0.5;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stealth-links a {
+      color: inherit;
+      opacity: 0.75;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: opacity 0.15s ease;
+    }
+    .stealth-links a:hover {
+      opacity: 1;
+    }
+    .link-divider {
+      opacity: 0.35;
+      user-select: none;
+    }
     .stealth-contact {
       font-size: 0.95rem;
       opacity: 0.6;
@@ -47,18 +77,29 @@
 </head>
 <body>
 
-  <div class="stealth-card">
+  <main class="stealth-card">
     <h1>Oceans Niagara</h1>
     <p>
       High-assurance edge synchronization and distributed control engines.
     </p>
+
+    <nav class="stealth-links" aria-label="Product Sandbox and Purchase">
+      <span class="link-group-label">Product Sandbox:</span>
+      <a href="./see-your-data/">See Your Data</a>
+      <a href="/linkguard/docs/sandbox.html">LinkGuard</a>
+      <span class="link-divider" aria-hidden="true">&bull;</span>
+      <a href="/linkguard/docs/">Purchase</a>
+    </nav>
+
     <div class="stealth-contact">
       <a href="mailto:connect@oceansniagara.com">connect@oceansniagara.com</a>
     </div>
-    <div class="stealth-footer">
-      Private Systems R&D &bull; &copy; 2026 Oceans Niagara, LLC
-    </div>
-  </div>
+    <footer class="stealth-footer">
+      Private Systems R&amp;D &bull; &copy; 2026 Oceans Niagara, LLC
+    </footer>
+  </main>
 
 </body>
 </html>
+
+
