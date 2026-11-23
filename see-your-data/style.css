@@ -196,6 +196,27 @@ button {
   font-size: 13px;
 }
 
+.page-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.back-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12.5px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  white-space: nowrap;
+}
+.back-link:hover {
+  color: var(--text);
+  border-color: var(--muted);
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
